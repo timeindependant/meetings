@@ -31,7 +31,7 @@
 }
 
 .bigBG {
-  background: #222642;
+  background: #7173EF;
   position: absolute;
   border-radius: 50%;
   transition: transform 150ms ease-out;
@@ -39,7 +39,7 @@
 
 .smallBG {
   position: absolute;
-  background: #FFF;
+  background: #7173EF;
   border: 2px solid white;
   border-radius: 50%;
   transition: transform 150ms ease-out;

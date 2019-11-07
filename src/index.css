@@ -6,17 +6,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  color: white !important;
+}
+
 a {
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
 
 a:link {
-  color: black;
+  color: white;
 }
 
 a:visited {
-  color: black;
+  color: white;
 }
 
 a:active {

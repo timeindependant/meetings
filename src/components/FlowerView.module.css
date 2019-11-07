@@ -1,6 +1,7 @@
 .container {
     position: relative;
     overflow: hidden;
+    background: #05082B;
 }
 
 .renderContainer {
@@ -53,11 +54,11 @@
 
 @media (max-width:600px) {
     .seedInfo {
-      left: 15px;
-      top: 15px;
+        left: 15px;
+        top: 15px;
     }
-    
+
     .petalInfo {
         left: 15px;
     }
-  }
+}

@@ -2,12 +2,12 @@
   position: absolute;
   z-index: 12;
   width: 100%;
-  box-shadow: 0 3px 15px rgba(36,40,67,0.1);
+  box-shadow: 0 3px 15px rgba(36, 40, 67, 0.1);
   display: flex;
   top: 0;
   flex-direction: row;
   flex-wrap: nowrap;
-  background: #FFF;
+  background: #1B1D3F;
 }
 
 .logoContainer {
