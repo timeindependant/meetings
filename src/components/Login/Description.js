@@ -1,7 +1,7 @@
-import React from "react";
-import style from "./Login.module.css";
+import React from 'react'
+import style from './Login.module.css'
 
-export default function Description() {
+export default function Description () {
   return (
     <div className={style.description}>
       <h2 className={style.descriptionHeading}>Reclaim Your Mind!</h2>
@@ -15,5 +15,5 @@ export default function Description() {
         </p>
       </p>
     </div>
-  );
+  )
 }

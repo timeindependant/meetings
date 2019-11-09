@@ -45,6 +45,16 @@
   font-weight: normal;
 }
 
+.meetingTitle {
+  text-align: left;
+  margin-left: 25px;
+}
+
+.tutText {
+  width: 210px;
+  margin-left: 25px;
+}
+
 .abort {
   bottom: 25px;
   right: 25px;

@@ -23,6 +23,12 @@
   align-items: center;
 }
 
+.title {
+  color: "white";
+  font-family: "Sarabun";
+  font-weight: "bold"
+}
+
 @media (max-width:600px) {
   .logoContainer {
     margin-left: 20px;

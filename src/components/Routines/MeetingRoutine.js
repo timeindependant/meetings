@@ -22,9 +22,10 @@ import TitleInput from "./TitleInput";
 import FloatingButton from "../UI/FloatingButton";
 
 import style from "./Routines.module.css";
+import WebRecorder from "./WebRecorder";
 
 const PHASES = [
-  { name: "LINK_VIDEO", title: "Provide Video Link to create new flower" },
+  { name: "RECORD_VIDEO", title: "" },
   { name: "ADD_META", title: "" }
 ];
 
@@ -191,33 +192,21 @@ class FlowerRoutine extends React.Component {
 
     return [
       <div key="mainContainer" className={style.container}>
-        <h2 className={style.phaseTitle}>{currentPhase.title}</h2>
-        {currentPhase.name === "LINK_VIDEO" && (
-          <VideoLinker
-            finished={this.linkGiven}
-            setValidInput={this.setValidInput}
-            videoLink={videoLink}
-            setVideoLink={videoLink => {
-              this.setState({ videoLink });
-            }}
-            setTitle={title => {
-              this.setState({ title });
-            }}
-            setDuration={duration => {
-              this.setState({ duration, targetOut: duration });
-            }}
-          />
+        <h2 className={`${style.phaseTitle} ${style.meetingTitle}`}>
+          Record a Video
+        </h2>
+        {currentPhase.name === "RECORD_VIDEO" && (
+          <p className={style.tutText}>
+            Now you can add your answer to the statement in the central video
+          </p>
         )}
+        {currentPhase.name === "RECORD_VIDEO" && <WebRecorder />}
         {currentPhase.name === "ADD_META" && (
           <TitleInput
             title={title}
-            description={description}
             setValidInput={this.setValidInput}
             setTitle={title => {
               this.setState({ title });
-            }}
-            setDescription={description => {
-              this.setState({ description });
             }}
           />
         )}
@@ -227,7 +216,7 @@ class FlowerRoutine extends React.Component {
             style={{
               right: this.props.sideBarOpen ? `168px` : "10px"
             }}
-            onClick={this.nextPhase}
+            onClick={() => this.nextPhase()}
             deactivated={!isValidInput}
             round
           >
@@ -268,8 +257,8 @@ class FlowerRoutine extends React.Component {
         <FloatingButton
           className={style.abort}
           style={{
-            border: "2px solid #1B1D3F",
-            background: "#7173EF",
+            border: "2px solid #05082B",
+            background: "trasnparent",
             bottom: "unset",
             top: "20px"
           }}
@@ -302,8 +291,8 @@ class FlowerRoutine extends React.Component {
             this.container = ref;
           }}
         >
-          {((currentPhase.name === "LINK_VIDEO" && isValidInput) ||
-            currentPhase.name !== "LINK_VIDEO") && (
+          {((currentPhase.name === "RECORD_VIDEO" && isValidInput) ||
+            currentPhase.name !== "RECORD_VIDEO") && (
             <VideoPlayer
               url={videoLink}
               color={"grey"}

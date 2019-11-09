@@ -14,7 +14,7 @@ import Navigation from "./components/Navigation/Navigation";
 import Login from "./components/Login/Login";
 import AdminArea from "./components/Admin/AdminArea";
 import FlowerView from "./components/FlowerView";
-import FlowerRoutine from "./components/Routines/FlowerRoutine";
+import MeetingRoutine from "./components/Routines/MeetingRoutine";
 
 import Home from "./components/Home/Home";
 
@@ -138,7 +138,7 @@ class App extends Component {
                   background: "#05082B"
                 }}
               >
-                <FlowerRoutine />
+                <MeetingRoutine />
               </div>
             )}
           </div>
