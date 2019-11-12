@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 
-import style from "./TitleInput.module.css";
+import style from './TitleInput.module.css'
 
-function checkInput(title, description) {
+function checkInput (title, description) {
   if (title.length > 5) {
-    return true;
+    return true
   }
-  return false;
+  return false
 }
 
-function TitleInput(props) {
+function TitleInput (props) {
   const {
     dimensions,
     title,
@@ -18,21 +18,21 @@ function TitleInput(props) {
     setValidInput,
     setTitle,
     setDescription
-  } = props;
+  } = props
 
   useEffect(() => {
-    setValidInput(checkInput(title, description));
-  }, []);
+    setValidInput(checkInput(title, description))
+  }, [])
 
   const onChangeTitle = e => {
-    setTitle(e.target.value);
-    setValidInput(checkInput(title, description));
-  };
+    setTitle(e.target.value)
+    setValidInput(checkInput(title, description))
+  }
 
   const onChangeDescription = e => {
-    setDescription(e.target.value);
-    setValidInput(checkInput(title, description));
-  };
+    setDescription(e.target.value)
+    setValidInput(checkInput(title, description))
+  }
 
   return (
     <div
@@ -41,18 +41,18 @@ function TitleInput(props) {
     >
       <input
         className={style.title}
-        type="text"
-        placeholder="Title"
+        type='text'
+        placeholder='Title'
         value={title}
         onChange={onChangeTitle}
       />
     </div>
-  );
+  )
 }
 
-function mapStateToProps(state) {
-  const { dimensions } = state;
-  return { dimensions };
+function mapStateToProps (state) {
+  const { dimensions } = state
+  return { dimensions }
 }
 
-export default connect(mapStateToProps)(TitleInput);
+export default connect(mapStateToProps)(TitleInput)

@@ -1,178 +1,178 @@
-import React from "react";
-import classNames from "classnames";
-import { toast } from "react-toastify";
-import getFileTypeExtension from "@uppy/utils/lib/getFileTypeExtension";
-import { TiMediaRecord, TiMediaStop } from "react-icons/ti";
-import recImage from "../../assets/Group 1529@2x.png";
-import VideoPlayer from "../VideoPlayer/VideoPlayer";
-import checkIcon from "../../assets/Group 1101.png";
-import trashIcon from "../../assets/Component 1@2x.png";
+import React from 'react'
+import classNames from 'classnames'
+import { toast } from 'react-toastify'
+import getFileTypeExtension from '@uppy/utils/lib/getFileTypeExtension'
+import { TiMediaRecord, TiMediaStop } from 'react-icons/ti'
+import recImage from '../../assets/Group 1529@2x.png'
+import VideoPlayer from '../VideoPlayer/VideoPlayer'
+import checkIcon from '../../assets/Group 1101.png'
+import trashIcon from '../../assets/Component 1@2x.png'
 
-import style from "./WebRecorder.module.css";
+import style from './WebRecorder.module.css'
 
 /* Function copied from @uppy/webcam */
-function getMediaDevices() {
+function getMediaDevices () {
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    return navigator.mediaDevices;
+    return navigator.mediaDevices
   }
 
   const getUserMedia =
-    navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+    navigator.mozGetUserMedia || navigator.webkitGetUserMedia
   if (!getUserMedia) {
-    return null;
+    return null
   }
 
   return {
-    getUserMedia(opts) {
+    getUserMedia (opts) {
       return new Promise((resolve, reject) => {
-        getUserMedia.call(navigator, opts, resolve, reject);
-      });
+        getUserMedia.call(navigator, opts, resolve, reject)
+      })
     }
-  };
+  }
 }
 
 class WebRecorder extends React.Component {
   state = {
-    stream: "",
+    stream: '',
     recording: false,
     finished: false,
-    videoURL: "",
+    videoURL: '',
     recorderReady: true
   };
 
-  constructor(props) {
-    super(props);
-    this.mediaDevices = getMediaDevices();
+  constructor (props) {
+    super(props)
+    this.mediaDevices = getMediaDevices()
     this.mediaDevices
       .getUserMedia({ audio: true, video: true })
       .then(stream => {
-        this.stream = stream;
-        this.webcamPreview.srcObject = stream;
+        this.stream = stream
+        this.webcamPreview.srcObject = stream
         this.setState({
           recorderReady: true
-        });
+        })
       })
       .catch(() => {
-        toast.error("Your browser does not support video recording.");
-      });
+        toast.error('Your browser does not support video recording.')
+      })
   }
 
-  componentWillUnmount() {
-    this.unregister();
+  componentWillUnmount () {
+    this.unregister()
   }
 
   record = () => {
-    this.recorder = new MediaRecorder(this.stream);
-    this.recordingChunks = [];
-    this.recorder.addEventListener("dataavailable", event => {
-      this.recordingChunks.push(event.data);
-    });
+    this.recorder = new MediaRecorder(this.stream)
+    this.recordingChunks = []
+    this.recorder.addEventListener('dataavailable', event => {
+      this.recordingChunks.push(event.data)
+    })
 
-    this.recorder.start();
+    this.recorder.start()
     this.setState({
       recording: true
-    });
+    })
   };
 
   unregister = () => {
-    this.recordingChunks = null;
-    this.recorder = null;
+    this.recordingChunks = null
+    this.recorder = null
     if (this.stream) {
       this.stream.getAudioTracks().forEach(track => {
-        track.stop();
-      });
+        track.stop()
+      })
       this.stream.getVideoTracks().forEach(track => {
-        track.stop();
-      });
+        track.stop()
+      })
     }
   };
 
   stopRecord = () => {
     const stopped = new Promise(resolve => {
-      this.recorder.addEventListener("stop", () => {
-        resolve();
-      });
-      this.recorder.stop();
-    });
+      this.recorder.addEventListener('stop', () => {
+        resolve()
+      })
+      this.recorder.stop()
+    })
 
     stopped
       .then(() => this.getVideo())
       .then(file => {
-        this.videoFile = file;
-        this.webcamPreview.srcObject = undefined;
-        this.props.recorderFinished(file);
+        this.videoFile = file
+        this.webcamPreview.srcObject = undefined
+        this.props.recorderFinished(file)
         this.setState({
           recording: false,
           finished: true,
           videoURL: window.URL.createObjectURL(file.data)
-        });
+        })
       })
       .then(
         () => {
-          this.unregister();
+          this.unregister()
         },
         error => {
-          this.unregister();
-          toast.error(error.message);
+          this.unregister()
+          toast.error(error.message)
         }
-      );
+      )
   };
 
   getVideo = () => {
-    const mimeType = this.recordingChunks[0].type;
-    const fileExtension = getFileTypeExtension(mimeType);
+    const mimeType = this.recordingChunks[0].type
+    const fileExtension = getFileTypeExtension(mimeType)
 
     if (!fileExtension) {
       return Promise.reject(
         new Error(
           `Could not retrieve recording: Unsupported media type "${mimeType}"`
         )
-      );
+      )
     }
 
-    const name = `NoID${Date.now()}.${fileExtension}`;
-    const blob = new Blob(this.recordingChunks, { type: mimeType });
+    const name = `NoID${Date.now()}.${fileExtension}`
+    const blob = new Blob(this.recordingChunks, { type: mimeType })
     const file = {
-      source: "Webcam",
+      source: 'Webcam',
       name: name,
       data: new Blob([blob], { type: mimeType }),
       type: mimeType,
       fileExtension
-    };
+    }
 
-    return Promise.resolve(file);
+    return Promise.resolve(file)
   };
 
-  render() {
-    const { recorderReady, recording, finished, videoURL } = this.state;
-    const { size, color, showControls } = this.props;
+  render () {
+    const { recorderReady, recording, finished, videoURL } = this.state
+    const { size, color, showControls } = this.props
 
     // TODO: issues with Timeline size due to required sizing of enclosing box
-    const r = Math.floor(size * 0.5);
+    const r = Math.floor(size * 0.5)
 
     return [
       <div
         className={style.videoContainer}
-        key="video"
+        key='video'
         style={{
           width: `${r * 2 - 8}px`,
           height: `${r * 2 - 8}px`
         }}
       >
         <video
-          key="preview"
-          height="100%"
+          key='preview'
+          height='100%'
           autoPlay
           muted
           className={style.video}
           loop
           ref={ref => {
-            this.webcamPreview = ref;
+            this.webcamPreview = ref
           }}
         />
       </div>,
       <div
-        key="webcamPlayerContainer"
+        key='webcamPlayerContainer'
         style={{
           width: `${r * 2 - 2}px`,
           height: `${r * 2 - 2}px`
@@ -180,7 +180,7 @@ class WebRecorder extends React.Component {
       >
         {finished && (
           <VideoPlayer
-            key="webcamPlayer"
+            key='webcamPlayer'
             url={videoURL}
             color={color}
             r={r}
@@ -206,38 +206,38 @@ class WebRecorder extends React.Component {
       //    }}
       //    onClick={this.record}
       //  />
-      <span key="controls" className={style.controls}>
+      <span key='controls' className={style.controls}>
         {this.state.recording == false && this.state.finished == true ? (
           <div className={style.iconsContainer}>
             <img
               src={trashIcon}
-              alt=""
+              alt=''
               className={`${style.recordBtn}`}
               style={{
                 margin: ``,
-                pointerEvents: "all",
-                cursor: "pointer",
-                width: "40px",
-                marginRight: "9em",
-                marginTop: "-0.6em"
+                pointerEvents: 'all',
+                cursor: 'pointer',
+                width: '40px',
+                marginRight: '9em',
+                marginTop: '-0.6em'
               }}
               onClick={() => {
-                if (this.state.recording) this.record();
-                else this.stopRecord();
+                if (this.state.recording) this.record()
+                else this.stopRecord()
               }}
             />
             <img
               src={checkIcon}
-              alt=""
+              alt=''
               className={`${style.recordBtn} ${style.trashIcon}`}
               style={{
                 margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
-                pointerEvents: "all",
-                cursor: "pointer"
+                pointerEvents: 'all',
+                cursor: 'pointer'
               }}
               onClick={() => {
-                if (this.state.recording) this.record();
-                else this.stopRecord();
+                if (this.state.recording) this.record()
+                else this.stopRecord()
               }}
             />
           </div>
@@ -245,23 +245,23 @@ class WebRecorder extends React.Component {
           recorderReady && [
             <img
               src={recImage}
-              alt=""
+              alt=''
               className={style.recordBtn}
               style={{
                 margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
-                pointerEvents: "all",
-                cursor: "pointer"
+                pointerEvents: 'all',
+                cursor: 'pointer'
               }}
               onClick={() => {
-                if (this.state.recording) this.record();
-                else this.stopRecord();
+                if (this.state.recording) this.record()
+                else this.stopRecord()
               }}
             />
           ]
         )}
       </span>
-    ];
+    ]
   }
 }
 
-export default WebRecorder;
+export default WebRecorder
