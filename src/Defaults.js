@@ -32,13 +32,13 @@ export const FLAVORS = [
   },
   {
     name: "Nuetral",
-    type: "pro",
+    type: "nue",
     color: "#36B37E",
     icon: balance
   },
   {
     name: "Solution",
-    type: "solution",
+    type: "sol",
     color: "#7A869A",
     icon: solution
   },
@@ -51,13 +51,13 @@ export const FLAVORS = [
   },
   {
     name: "Agenda Topic",
-    type: "agenda",
+    type: "age",
     color: "#ffAB00",
     icon: agenda
   },
   {
     name: "Summary",
-    type: "summary",
+    type: "sum",
     color: "#2684FF",
     icon: summary,
     size: 41
