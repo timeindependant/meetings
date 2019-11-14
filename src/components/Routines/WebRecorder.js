@@ -95,7 +95,8 @@ class WebRecorder extends React.Component {
       .then((file) => {
         this.videoFile = file
         this.webcamPreview.srcObject = undefined
-        this.props.recorderFinished(file)
+        this.props.finished(file)
+        // this.props.setValidInput(true)
         this.setState({
           recording: false,
           finished: true,
@@ -123,8 +124,10 @@ class WebRecorder extends React.Component {
     const file = {
       source: 'Webcam',
       name: name,
-      data: new Blob([blob], { type: mimeType }),
+      // data: new Blob([blob], { type: mimeType }),
+      data: blob,
       type: mimeType,
+      size: blob.size,
       fileExtension
     }
 

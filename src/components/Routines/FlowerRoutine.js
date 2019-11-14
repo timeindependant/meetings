@@ -16,9 +16,10 @@ import TitleInput from './TitleInput'
 import FloatingButton from '../UI/FloatingButton'
 
 import style from './Routines.module.css'
+import WebRecorder from './WebRecorder'
 
 const PHASES = [
-  { name: 'LINK_VIDEO', title: 'Provide a video link' },
+  { name: 'RECORD_VIDEO', title: 'Record a video' },
   { name: 'ADD_META', title: 'Provide additional information.' }
 ]
 
@@ -35,12 +36,13 @@ class FlowerRoutine extends React.Component {
       phase: 0,
       animationsFinished: false,
       videoLink: (selectedFlower) ? `https://www.youtube.com/watch?v=${selectedFlower.url}` : '',
+      videoFile: undefined,
+      duration: 0,
       title: (selectedFlower) ? selectedFlower.title : '',
       description: (selectedFlower) ? selectedFlower.description : '',
-      // sourceIn: (selectedFlower) ? selectedFlower.sourceIn : 0,
-      // sourceOut: (selectedFlower) ? selectedFlower.sourceOut : 0,
       isValidInput: false,
-      selectedFlower
+      selectedFlower,
+      form: ''
     }
   }
 
@@ -75,6 +77,26 @@ class FlowerRoutine extends React.Component {
     }
   }
 
+  recorderFinished = (videoFile) => {
+    const formData = new FormData()
+    formData.append('fname', videoFile.name)
+    formData.append('video', videoFile.data)
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/uploadLink`,
+      {
+        credentials: 'include',
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          videoFile,
+          videoLink: 'https://vimeo.com/' + json.uri.split('/')[2],
+          isValidInput: true
+        })
+      })
+  }
+
   setValidInput = (isValid) => {
     if (isValid !== this.state.validInput) {
       this.setState({ isValidInput: isValid })
@@ -89,7 +111,7 @@ class FlowerRoutine extends React.Component {
     const data = {
       title,
       description,
-      type: 'youtube',
+      type: 'vimeo',
       link: videoLink,
       id: globals.editFlowerStatus.id
     }
@@ -135,16 +157,6 @@ class FlowerRoutine extends React.Component {
         className={style.container}
       >
         <h2 className={style.phaseTitle}>{currentPhase.title}</h2>
-        {currentPhase.name === 'LINK_VIDEO' &&
-        <VideoLinker
-          finished={this.linkGiven}
-          setValidInput={this.setValidInput}
-          videoLink={videoLink}
-          setVideoLink={(videoLink) => { this.setState({ videoLink }) }}
-          setTitle={(title) => { this.setState({ title }) }}
-          setDuration={(duration) => { this.setState({ duration, targetOut: duration }) }}
-        />
-        }
         {currentPhase.name === 'ADD_META' &&
           <TitleInput
             title={title}
@@ -220,7 +232,17 @@ class FlowerRoutine extends React.Component {
           }}
           ref={(ref) => { this.container = ref }}
         >
-          {((currentPhase.name === 'LINK_VIDEO' && isValidInput) ||
+          <WebRecorder
+            finished={this.recorderFinished}
+            size={dimensions.rootSize}
+            showControls
+            setValidInput={this.setValidInput}
+            videoLink={videoLink}
+            setVideoLink={(videoLink) => { this.setState({ videoLink }) }}
+            setTitle={(title) => { this.setState({ title }) }}
+            setDuration={(duration) => { this.setState({ duration, targetOut: duration }) }}
+          />
+          {/* {((currentPhase.name === 'LINK_VIDEO' && isValidInput) ||
           currentPhase.name !== 'LINK_VIDEO') &&
           <VideoPlayer
             url={videoLink}
@@ -231,9 +253,17 @@ class FlowerRoutine extends React.Component {
             hideControls={(currentPhase.name === 'ADD_META')}
             shouldUpdate={(currentPhase.name !== 'ADD_META')}
           />
-          }
+          } */}
         </div>
-      </div>
+      </div>,
+      <div
+        key='hiddenField'
+        ref={(ref) => { this.hiddenForm = ref }}
+        style={{
+          display: 'none'
+        }}
+        dangerouslySetInnerHTML={{ __html: this.state.form }}
+      />
     ]
   }
 }
@@ -245,7 +275,7 @@ FlowerRoutine.defaultProps = {
 }
 
 FlowerRoutine.propTypes = {
-  id: PropTypes.string.isRequired,
+  // id: PropTypes.string.isRequired,
   rootDuration: PropTypes.number,
   currentTime: PropTypes.number,
   currentProgress: PropTypes.number

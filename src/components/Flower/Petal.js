@@ -16,6 +16,8 @@ function getFullVideoURL (url, type) {
   switch (type) {
     case 'youtube':
       return 'https:\\youtube.com/watch?v=' + url
+    case 'vimeo':
+      return 'https://vimeo.com/' + url
     case 'native':
       return 'https://video.diversus.me/hls/' + url + '/.m3u8'
     default:
