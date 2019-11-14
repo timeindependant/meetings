@@ -97,7 +97,7 @@ class NodeRoutine extends React.Component {
     }
   }
 
-  recorderFinished = (videoFile) => {
+  recorderFinished = (videoFile, duration) => {
     const formData = new FormData()
     formData.append('fname', videoFile.name)
     formData.append('video', videoFile.data)
@@ -112,7 +112,8 @@ class NodeRoutine extends React.Component {
         this.setState({
           videoFile,
           videoLink: 'https://vimeo.com/' + json.uri.split('/')[2],
-          isValidInput: true
+          isValidInput: true,
+          duration
         })
       })
   }
@@ -171,7 +172,7 @@ class NodeRoutine extends React.Component {
     const { globals } = this.props
     const { selectedPetal } = this.state
     const {
-      title, description, flavor, targetIn,
+      title, description, flavor, targetIn, duration,
       targetOut, sourceIn, sourceOut, videoLink
     } = this.state
     const data = {
@@ -183,7 +184,8 @@ class NodeRoutine extends React.Component {
       sourceOut,
       targetIn,
       targetOut,
-      flavor
+      flavor,
+      duration
     }
     if (globals.addNodeRoutineRunning) {
       this.props.addNode(globals.selectedFlower, { ...data, id: globals.selectedFlower })

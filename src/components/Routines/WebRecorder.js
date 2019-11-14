@@ -34,7 +34,9 @@ class WebRecorder extends React.Component {
     recording: false,
     finished: false,
     videoURL: '',
-    recorderReady: false
+    recorderReady: false,
+    started: 0,
+    ended: 0
   }
 
   constructor (props) {
@@ -66,7 +68,8 @@ class WebRecorder extends React.Component {
 
     this.recorder.start()
     this.setState({
-      recording: true
+      recording: true,
+      started: new Date()
     })
   }
 
@@ -84,6 +87,9 @@ class WebRecorder extends React.Component {
   }
 
   stopRecord = () => {
+    this.setState({
+      ended: new Date()
+    })
     const stopped = new Promise((resolve) => {
       this.recorder.addEventListener('stop', () => {
         resolve()
@@ -95,7 +101,7 @@ class WebRecorder extends React.Component {
       .then((file) => {
         this.videoFile = file
         this.webcamPreview.srcObject = undefined
-        this.props.finished(file)
+        this.props.finished(file, Math.round((this.state.ended - this.state.started) / 1000))
         // this.props.setValidInput(true)
         this.setState({
           recording: false,

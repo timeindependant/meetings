@@ -77,7 +77,7 @@ class FlowerRoutine extends React.Component {
     }
   }
 
-  recorderFinished = (videoFile) => {
+  recorderFinished = (videoFile, duration) => {
     const formData = new FormData()
     formData.append('fname', videoFile.name)
     formData.append('video', videoFile.data)
@@ -92,7 +92,8 @@ class FlowerRoutine extends React.Component {
         this.setState({
           videoFile,
           videoLink: 'https://vimeo.com/' + json.uri.split('/')[2],
-          isValidInput: true
+          isValidInput: true,
+          duration
         })
       })
   }
@@ -106,14 +107,15 @@ class FlowerRoutine extends React.Component {
   onSubmit = () => {
     const { globals } = this.props
     const {
-      title, description, videoLink
+      title, description, videoLink, duration
     } = this.state
     const data = {
       title,
       description,
       type: 'vimeo',
       link: videoLink,
-      id: globals.editFlowerStatus.id
+      id: globals.editFlowerStatus.id,
+      duration
     }
     if (globals.addFlowerRoutineRunning) {
       this.props.addFlower(data)
