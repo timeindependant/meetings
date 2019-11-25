@@ -337,7 +337,7 @@ class NodeRoutine extends React.Component {
       >
         {currentPhase.name === 'POSITION' &&
         <VideoPlayer
-          url={`https://www.youtube.com/watch?v=${flowerData[globals.selectedFlower].video.url}`}
+          url={`'https://vimeo.com/'${flowerData[globals.selectedFlower].video.url}`}
           r={dimensions.rootRadius}
           isSelectedPetal
           color={'blue'}
