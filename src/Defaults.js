@@ -33,32 +33,32 @@ export const FLAVORS = [
   {
     name: 'Neutral',
     type: 'neutral',
-    color: '#36B37E',
+    color: '#7a8499',
     icon: balance
   },
   {
     name: 'Solution',
     type: 'solution',
-    color: '#7A869A',
+    color: '#ba85fb',
     icon: solution
   },
 
   {
     name: 'Idea',
     type: 'idea',
-    color: '#6554C0',
+    color: '#f4d176',
     icon: idea
   },
   {
     name: 'Agenda Topic',
     type: 'agenda',
-    color: '#ffAB00',
+    color: '#79e1f1',
     icon: agenda
   },
   {
     name: 'Summary',
     type: 'summary',
-    color: '#2684FF',
+    color: '#4894fc',
     icon: summary,
     size: 41
   }
