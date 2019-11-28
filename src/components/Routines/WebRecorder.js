@@ -37,7 +37,7 @@ class WebRecorder extends React.Component {
     recording: false,
     finished: false,
     videoURL: '',
-    recorderReady: true
+    recorderReady: false
   };
 
   constructor (props) {
@@ -64,6 +64,7 @@ class WebRecorder extends React.Component {
   record = () => {
     this.recorder = new MediaRecorder(this.stream)
     this.recordingChunks = []
+    console.log(this.recorder)
     this.recorder.addEventListener('dataavailable', event => {
       this.recordingChunks.push(event.data)
     })
@@ -207,7 +208,7 @@ class WebRecorder extends React.Component {
       //    onClick={this.record}
       //  />
       <span key='controls' className={style.controls}>
-        {this.state.recording == false && this.state.finished == true ? (
+        {!this.state.recording && this.state.finished ? (
           <div className={style.iconsContainer}>
             <img
               src={trashIcon}
@@ -253,7 +254,7 @@ class WebRecorder extends React.Component {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                if (this.state.recording) this.record()
+                if (!this.state.recording) this.record()
                 else this.stopRecord()
               }}
             />

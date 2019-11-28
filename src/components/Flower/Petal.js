@@ -102,6 +102,7 @@ class Petal extends React.Component {
     const { wasSelected } = this.state
     console.log(flavor, 'flavor is')
     const Flavor = getFlavor(flavor)
+    console.log(Flavor)
 
     return (
       <div

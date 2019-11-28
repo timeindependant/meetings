@@ -1,4 +1,4 @@
-import Stop from './assets/stop.png'
+import stop from './assets/stop.png'
 import solution from './assets/solution.png'
 import Check from './assets/check.png'
 import agenda from './assets/agenda.png'
@@ -22,7 +22,7 @@ export const FLAVORS = [
     name: 'Contradiction',
     type: 'contra',
     color: '#E74949',
-    icon: Stop
+    icon: stop
   },
   {
     name: 'Support',
@@ -31,14 +31,14 @@ export const FLAVORS = [
     icon: Check
   },
   {
-    name: 'Nuetral',
-    type: 'nue',
+    name: 'Neutral',
+    type: 'neutral',
     color: '#36B37E',
     icon: balance
   },
   {
     name: 'Solution',
-    type: 'sol',
+    type: 'solution',
     color: '#7A869A',
     icon: solution
   },
@@ -51,13 +51,13 @@ export const FLAVORS = [
   },
   {
     name: 'Agenda Topic',
-    type: 'age',
+    type: 'agenda',
     color: '#ffAB00',
     icon: agenda
   },
   {
     name: 'Summary',
-    type: 'sum',
+    type: 'summary',
     color: '#2684FF',
     icon: summary,
     size: 41
