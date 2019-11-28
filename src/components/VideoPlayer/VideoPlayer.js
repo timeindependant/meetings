@@ -166,6 +166,19 @@ class VideoPlayer extends React.Component {
                 start,
                 end
               }
+            },
+            vimeo: {
+              playerOptions: {
+                transparent: true,
+                title: false,
+                // playsinline: true,
+                fun: false,
+                controls: false,
+                byline: false,
+                autoplay: true,
+                autopause: false
+              },
+              preload: true
             }
           }}
           // style={{ transform: 'translateX(-50%)' }}

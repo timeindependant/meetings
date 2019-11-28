@@ -156,14 +156,15 @@ class Petal extends React.Component {
         >
           <img
             className={style.image}
-            src={`https://img.youtube.com/vi/${video.url}/sddefault.jpg`}
+            // src={`https://img.youtube.com/vi/${video.url}/sddefault.jpg`}
           />
+          {/* <div className={style.image} style={{ background: 'white' }} /> */}
           <div
             className={style.overlayColor}
             style={{
               background: color,
               opacity:
-                isSelectedPetal || isRootNode ? 0 : r * zoom < 20 ? 1 : 0.35
+                isSelectedPetal || isRootNode ? 0 : r * zoom < 20 ? 1 : 0.5
             }}
           />
           <Flavor.icon
