@@ -37,8 +37,10 @@ class WebRecorder extends React.Component {
     recording: false,
     finished: false,
     videoURL: '',
-    recorderReady: false
-  };
+    recorderReady: false,
+    started: 0,
+    ended: 0
+  }
 
   constructor (props) {
     super(props)
@@ -71,7 +73,8 @@ class WebRecorder extends React.Component {
 
     this.recorder.start()
     this.setState({
-      recording: true
+      recording: true,
+      started: new Date()
     })
   };
 
@@ -89,7 +92,10 @@ class WebRecorder extends React.Component {
   };
 
   stopRecord = () => {
-    const stopped = new Promise(resolve => {
+    this.setState({
+      ended: new Date()
+    })
+    const stopped = new Promise((resolve) => {
       this.recorder.addEventListener('stop', () => {
         resolve()
       })
@@ -101,7 +107,8 @@ class WebRecorder extends React.Component {
       .then(file => {
         this.videoFile = file
         this.webcamPreview.srcObject = undefined
-        this.props.recorderFinished(file)
+        this.props.finished(file, Math.round((this.state.ended - this.state.started) / 1000))
+        // this.props.setValidInput(true)
         this.setState({
           recording: false,
           finished: true,
@@ -136,8 +143,10 @@ class WebRecorder extends React.Component {
     const file = {
       source: 'Webcam',
       name: name,
-      data: new Blob([blob], { type: mimeType }),
+      // data: new Blob([blob], { type: mimeType }),
+      data: blob,
       type: mimeType,
+      size: blob.size,
       fileExtension
     }
 
@@ -175,8 +184,9 @@ class WebRecorder extends React.Component {
       <div
         key='webcamPlayerContainer'
         style={{
-          width: `${r * 2 - 2}px`,
-          height: `${r * 2 - 2}px`
+          position: 'absolute',
+          width: `${r * 2}px`,
+          height: `${r * 2}px`
         }}
       >
         {finished && (
@@ -207,60 +217,58 @@ class WebRecorder extends React.Component {
       //    }}
       //    onClick={this.record}
       //  />
-      <span key='controls' className={style.controls}>
-        {!this.state.recording && this.state.finished ? (
-          <div className={style.iconsContainer}>
-            <img
-              src={trashIcon}
-              alt=''
-              className={`${style.recordBtn}`}
-              style={{
-                margin: ``,
-                pointerEvents: 'all',
-                cursor: 'pointer',
-                width: '40px',
-                marginRight: '9em',
-                marginTop: '-0.6em'
-              }}
-              onClick={() => {
-                if (this.state.recording) this.record()
-                else this.stopRecord()
-              }}
-            />
-            <img
-              src={checkIcon}
-              alt=''
-              className={`${style.recordBtn} ${style.trashIcon}`}
-              style={{
-                margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
-                pointerEvents: 'all',
-                cursor: 'pointer'
-              }}
-              onClick={() => {
-                if (this.state.recording) this.record()
-                else this.stopRecord()
-              }}
-            />
-          </div>
-        ) : (
-          recorderReady && [
-            <img
-              src={recImage}
-              alt=''
-              className={style.recordBtn}
-              style={{
-                margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
-                pointerEvents: 'all',
-                cursor: 'pointer'
-              }}
-              onClick={() => {
-                if (!this.state.recording) this.record()
-                else this.stopRecord()
-              }}
-            />
-          ]
-        )}
-      </span>
+      <div key='controls' className={style.controls}>
+        {recorderReady && !finished &&
+        <img
+          src={recImage}
+          alt=''
+          className={style.recordBtn}
+          style={{
+            // margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
+            pointerEvents: 'all',
+            cursor: 'pointer'
+          }}
+          onClick={() => {
+            if (!this.state.recording) this.record()
+            else this.stopRecord()
+          }}
+        />
+        }
+      </div>
+      //   <div className={style.iconsContainer}>
+      //     <img
+      //       src={trashIcon}
+      //       alt=''
+      //       className={`${style.recordBtn}`}
+      //       style={{
+      //         margin: ``,
+      //         pointerEvents: 'all',
+      //         cursor: 'pointer',
+      //         width: '40px',
+      //         marginRight: '9em',
+      //         marginTop: '-0.6em'
+      //       }}
+      //       onClick={() => {
+      //         if (this.state.recording) this.record()
+      //         else this.stopRecord()
+      //       }}
+      //     />
+      //     <img
+      //       src={checkIcon}
+      //       alt=''
+      //       className={`${style.recordBtn} ${style.trashIcon}`}
+      //       style={{
+      //         margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
+      //         pointerEvents: 'all',
+      //         cursor: 'pointer'
+      //       }}
+      //       onClick={() => {
+      //         if (this.state.recording) this.record()
+      //         else this.stopRecord()
+      //       }}
+      //     />
+      //   </div>
+      // ) : (
     ]
   }
 }

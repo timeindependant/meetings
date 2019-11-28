@@ -225,7 +225,7 @@ export function connectGlobals (history) {
           }
         }
       case ADD_FLOWER_ERROR:
-        toast.success('Flower could not be added.')
+        toast.error('Flower could not be added.')
         return {
           ...state,
           addFlowerStatus: {

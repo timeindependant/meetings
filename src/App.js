@@ -17,6 +17,7 @@ import FlowerView from './components/FlowerView'
 import MeetingRoutine from './components/Routines/MeetingRoutine'
 
 import Home from './components/Home/Home'
+import Test from './test'
 
 const MOBILE_BREAKPOINT = 1200
 
@@ -96,7 +97,7 @@ class App extends Component {
           <div>
             <Switch location={location}>
               <Route path='/admin' exact component={AdminArea} />
-              <Route path='/home' exact component={Home} />
+              <Route path='/home' exact component={Test} />
               <Route path='/login' exact render={() => <Login />} />
               <Route
                 render={() => (

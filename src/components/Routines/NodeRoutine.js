@@ -20,7 +20,6 @@ import {
   stopEditNodeRoutine
 } from '../../state/globals/actions'
 
-import VideoLinker from './VideoLinker'
 import FlavorSelector from './FlavorSelector'
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import TitleInput from './TitleInput'
@@ -31,9 +30,9 @@ import style from './Routines.module.css'
 import WebRecorder from './WebRecorder'
 
 const PHASES = [
-  { name: 'LINK_VIDEO', title: 'Record Video' },
-  { name: 'SELECT_FLAVOR', title: 'Choose Link type.' },
-  { name: 'ADD_META', title: '' },
+  { name: 'RECORD_VIDEO', title: 'Record a video' },
+  { name: 'SELECT_FLAVOR', title: 'Select a flavor.' },
+  { name: 'ADD_META', title: 'Provide additional information.' },
   { name: 'POSITION', title: 'Position your answer.' }
 ]
 
@@ -152,7 +151,28 @@ class NodeRoutine extends React.Component {
     }
   };
 
-  setValidInput = isValid => {
+  recorderFinished = (videoFile, duration) => {
+    const formData = new FormData()
+    formData.append('fname', videoFile.name)
+    formData.append('video', videoFile.data)
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/uploadLink`,
+      {
+        credentials: 'include',
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          videoFile,
+          videoLink: 'https://vimeo.com/' + json.uri.split('/')[2],
+          isValidInput: true,
+          duration
+        })
+      })
+  }
+
+  setValidInput = (isValid) => {
     if (isValid !== this.state.validInput) {
       this.setState({ isValidInput: isValid })
     }
@@ -208,25 +228,20 @@ class NodeRoutine extends React.Component {
     const { globals } = this.props
     const { selectedPetal } = this.state
     const {
-      title,
-      description,
-      flavor,
-      targetIn,
-      targetOut,
-      sourceIn,
-      sourceOut,
-      videoLink
+      title, description, flavor, targetIn, duration,
+      targetOut, sourceIn, sourceOut, videoLink
     } = this.state
     const data = {
       title,
       description,
-      type: 'youtube',
+      type: 'vimeo',
       link: videoLink,
       sourceIn,
       sourceOut,
       targetIn,
       targetOut,
-      flavor
+      flavor,
+      duration
     }
     if (globals.addNodeRoutineRunning) {
       this.props.addNode(globals.selectedFlower, {
@@ -305,9 +320,9 @@ class NodeRoutine extends React.Component {
         )}
         {currentPhase.name === 'SELECT_FLAVOR' ||
         currentPhase.name === 'POSITION' ? (
-          <h2 className={`${style.phaseTitle} ${style.titleLeft}`}>
-              {currentPhase.title}
-            </h2>
+            <h2 className={`${style.phaseTitle} ${style.titleLeft}`}>
+            {currentPhase.title}
+          </h2>
           ) : (
             <h2 className={style.phaseTitle}>{currentPhase.title}</h2>
           )}
@@ -427,19 +442,29 @@ class NodeRoutine extends React.Component {
             this.container = ref
           }}
         >
-          {((currentPhase.name === 'LINK_VIDEO' && isValidInput) ||
-            currentPhase.name !== 'LINK_VIDEO') && (
-            <VideoPlayer
-              url={videoLink}
-              color={FLAVORS.find(elem => elem.type === flavor).color}
-              r={dimensions.rootRadius}
-              isSelectedPetal={currentPhase.name !== 'POSITION'}
-              // isPetal
-              wasSelected
-              hideControls={currentPhase.name === 'POSITION'}
-              shouldUpdate={currentPhase.name !== 'POSITION'}
-            />
-          )}
+          <WebRecorder
+            finished={this.recorderFinished}
+            size={dimensions.rootSize}
+            showControls
+            setValidInput={this.setValidInput}
+            videoLink={videoLink}
+            setVideoLink={(videoLink) => { this.setState({ videoLink }) }}
+            setTitle={(title) => { this.setState({ title }) }}
+            setDuration={(duration) => { this.setState({ duration, targetOut: duration }) }}
+          />
+          {/* {((currentPhase.name === 'LINK_VIDEO' && isValidInput) ||
+          currentPhase.name !== 'LINK_VIDEO') &&
+          <VideoPlayer
+            url={videoLink}
+            color={FLAVORS.find((elem) => elem.type === flavor).color}
+            r={dimensions.rootRadius}
+            isSelectedPetal={(currentPhase.name !== 'POSITION')}
+            // isPetal
+            wasSelected
+            hideControls={(currentPhase.name === 'POSITION')}
+            shouldUpdate={(currentPhase.name !== 'POSITION')}
+          />
+          } */}
         </div>
       </div>,
       <div
@@ -456,20 +481,20 @@ class NodeRoutine extends React.Component {
           this.container = ref
         }}
       >
-        {currentPhase.name === 'POSITION' && (
-          <VideoPlayer
-            url={`https://www.youtube.com/watch?v=${flowerData[globals.selectedFlower].video.url}`}
-            r={dimensions.rootRadius}
-            isSelectedPetal
-            color={'blue'}
-            progress={currentProgress}
-            shouldReceiveProgress
-            // isPetal
-            wasSelected
-            // hideControls={(phase === 3)}
-            shouldUpdate
-          />
-        )}
+        {currentPhase.name === 'POSITION' &&
+        <VideoPlayer
+          url={`'https://vimeo.com/'${flowerData[globals.selectedFlower].video.url}`}
+          r={dimensions.rootRadius}
+          isSelectedPetal
+          color={'blue'}
+          progress={currentProgress}
+          shouldReceiveProgress
+          // isPetal
+          wasSelected
+          // hideControls={(phase === 3)}
+          shouldUpdate
+        />
+        }
       </div>,
       <div
         key='dragContainer'
