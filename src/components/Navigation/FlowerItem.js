@@ -38,7 +38,7 @@ class FlowerItem extends React.Component {
           toast.error('Flower could not be deleted.')
         })
     }
-  }
+  };
 
   render () {
     const {
@@ -49,13 +49,16 @@ class FlowerItem extends React.Component {
       created,
       user,
       session,
-      isSelected
+      isSelected,
+      sideBarOpen
     } = this.props
 
     return (
       <div
-        className={style.container}
-        style={{ background: isSelected ? '#E7E9EF' : 'white' }}
+        className={`${style.container} ${
+          this.props.globals.selectedFlower ? style.barStyle : ''
+        } ${this.props.globals.selectedFlower ? style.Barcontainer : ''}`}
+        style={{ background: isSelected ? '#1B1D3F' : '#05082B' }}
       >
         <div className={style.right}>
           <div
@@ -78,36 +81,40 @@ class FlowerItem extends React.Component {
             </div>
           </div>
           <div className={style.bottomContainer}>
-            <div className={classnames(style.bottomContainerText)}>
+            {/* <div className={classnames(style.bottomContainerText)}>
               <img
                 className={style.icon}
-                src={process.env.PUBLIC_URL + '/icons/views.svg'}
-              />{' '}
+                src={process.env.PUBLIC_URL + "/icons/views.svg"}
+              />{" "}
               <div className={style.viewsText}>1,234</div>
-            </div>
+            </div> */}
             <div className={classnames(style.date, style.itemPadding)}>
               {moment(created).fromNow()}
             </div>
           </div>
-          {
-            session.authenticated &&
-            (session.role === 'admin' || session.id === user.id) &&
-            [
+          {session.authenticated &&
+            (session.role === 'admin' || session.id === user.id) && [
               <div
-                key='edit'
-                className={classnames(style.edit)}
-                onClick={() => { this.props.startEditFlowerRoutine(id, { title, description, url: videoId }) }}
-              >
-                <MdEdit color='grey' />
-              </div>,
+              key='edit'
+              className={classnames(style.edit)}
+              onClick={() => {
+                this.props.startEditFlowerRoutine(id, {
+                  title,
+                  description,
+                  url: videoId
+                })
+              }}
+            >
+              <MdEdit color='grey' />
+            </div>,
               <div
-                key='delete'
-                className={classnames(style.delete)}
-                onClick={this.delete}
-              >
-                <MdClear color='grey' size='1.1em' />
-              </div>
-            ]}
+              key='delete'
+              className={classnames(style.delete)}
+              onClick={this.delete}
+            >
+              <MdClear color='grey' size='1.1em' />
+            </div>
+          ]}
         </div>
       </div>
     )
@@ -118,22 +125,23 @@ FlowerItem.defaultProps = {
   description: 'No description.'
 }
 
-FlowerItem.propTypes = {
-  title: propTypes.string.isRequired,
-  videoId: propTypes.string.isRequired,
-  description: propTypes.string,
-  created: propTypes.instanceOf(Date).isRequired,
-  user: propTypes.object.isRequired,
-  id: propTypes.number.isRequired
-}
+// FlowerItem.propTypes = {
+//   title: propTypes.string.isRequired,
+//   videoId: propTypes.string.isRequired,
+//   description: propTypes.string,
+//   created: propTypes.instanceOf(Date).isRequired,
+//   user: propTypes.object.isRequired,
+//   id: propTypes.number.isRequired
+// };
 
 function mapStateToProps (state) {
-  const { session } = state
-  return { session }
+  const { session, globals } = state
+  return { session, globals }
 }
 
 const mapDispatchToProps = {
-  listFlowers, startEditFlowerRoutine
+  listFlowers,
+  startEditFlowerRoutine
 }
 
 export default connect(

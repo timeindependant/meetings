@@ -9,7 +9,6 @@ import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircleSharp'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#fff'
@@ -50,22 +49,21 @@ export default function Appbar () {
 
   return (
     <div className={classes.grow}>
-      <AppBar
-        position='static'
-        color='inherit'
-        className={classes.icon}
-      >
+      <AppBar position='static' color='inherit' className={classes.icon}>
         <Toolbar>
           <Typography className={classes.title} variant='h6' noWrap>
-            diversus
+            Timz
           </Typography>
-          <h2>diversus</h2>
+          <h2>Timz</h2>
           <div className={classes.grow} />
           <div>
             <IconButton aria-label='show 4 new mails' className={classes.icon}>
               <SearchIcon />
             </IconButton>
-            <IconButton aria-label='show 17 new notifications' className={classes.icon}>
+            <IconButton
+              aria-label='show 17 new notifications'
+              className={classes.icon}
+            >
               <Badge badgeContent={17} color='error'>
                 <NotificationsIcon />
               </Badge>

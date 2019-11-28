@@ -10,15 +10,15 @@ import style from './Login.module.css'
 import Description from './Description'
 import Input from './Input'
 import Info from './Info'
-import Logo from '../UI/Logo'
+import LogoBlack from '../UI/LogoBlack'
 
 class Login extends React.Component {
-  handleSubmit = (value) => {
+  handleSubmit = value => {
     const { session } = this.props
     if (!session.loginLinkLoading && !session.loginLinkSuccess) {
       this.props.requestLoginLink(value)
     }
-  }
+  };
 
   render () {
     const { session } = this.props
@@ -27,29 +27,30 @@ class Login extends React.Component {
         <div className={style.container}>
           <Grid container className={style.mainGrid}>
             <Grid item xs={12} sm={6} className={style.section}>
-              <Description />
+              {/* <Description /> */}
             </Grid>
             <Grid item xs={12} sm={6} className={style.section}>
               <Paper
                 className={style.paper}
                 children={[
                   <div className={style.heading}>
-                    <Logo
-                      shortenAtWidthOf={400}
-                      center
-                    />
+                    <LogoBlack shortenAtWidthOf={400} center />
                   </div>,
-                  (session.loginLinkSuccess) ? (
+                  session.loginLinkSuccess ? (
                     <Info />
                   ) : (
                     <Input
                       handleSubmit={this.handleSubmit}
-                      error={(session.loginLinkFailed) ? 'Please try again.' : undefined}
+                      error={
+                        session.loginLinkFailed
+                          ? 'Please try again.'
+                          : undefined
+                      }
                       disabled={session.loginLinkLoading}
                     />
                   )
-
-                ]} />
+                ]}
+              />
             </Grid>
           </Grid>
         </div>
@@ -67,4 +68,7 @@ const mapDispatchToProps = {
   requestLoginLink
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)

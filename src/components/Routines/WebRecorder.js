@@ -3,8 +3,10 @@ import classNames from 'classnames'
 import { toast } from 'react-toastify'
 import getFileTypeExtension from '@uppy/utils/lib/getFileTypeExtension'
 import { TiMediaRecord, TiMediaStop } from 'react-icons/ti'
-
+import recImage from '../../assets/Group 1529@2x.png'
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
+import checkIcon from '../../assets/Group 1101.png'
+import trashIcon from '../../assets/Component 1@2x.png'
 
 import style from './WebRecorder.module.css'
 
@@ -14,7 +16,8 @@ function getMediaDevices () {
     return navigator.mediaDevices
   }
 
-  const getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia
+  const getUserMedia =
+    navigator.mozGetUserMedia || navigator.webkitGetUserMedia
   if (!getUserMedia) {
     return null
   }
@@ -42,8 +45,9 @@ class WebRecorder extends React.Component {
   constructor (props) {
     super(props)
     this.mediaDevices = getMediaDevices()
-    this.mediaDevices.getUserMedia({ audio: true, video: true })
-      .then((stream) => {
+    this.mediaDevices
+      .getUserMedia({ audio: true, video: true })
+      .then(stream => {
         this.stream = stream
         this.webcamPreview.srcObject = stream
         this.setState({
@@ -62,7 +66,8 @@ class WebRecorder extends React.Component {
   record = () => {
     this.recorder = new MediaRecorder(this.stream)
     this.recordingChunks = []
-    this.recorder.addEventListener('dataavailable', (event) => {
+    console.log(this.recorder)
+    this.recorder.addEventListener('dataavailable', event => {
       this.recordingChunks.push(event.data)
     })
 
@@ -71,20 +76,20 @@ class WebRecorder extends React.Component {
       recording: true,
       started: new Date()
     })
-  }
+  };
 
   unregister = () => {
     this.recordingChunks = null
     this.recorder = null
     if (this.stream) {
-      this.stream.getAudioTracks().forEach((track) => {
+      this.stream.getAudioTracks().forEach(track => {
         track.stop()
       })
-      this.stream.getVideoTracks().forEach((track) => {
+      this.stream.getVideoTracks().forEach(track => {
         track.stop()
       })
     }
-  }
+  };
 
   stopRecord = () => {
     this.setState({
@@ -97,8 +102,9 @@ class WebRecorder extends React.Component {
       this.recorder.stop()
     })
 
-    stopped.then(() => this.getVideo())
-      .then((file) => {
+    stopped
+      .then(() => this.getVideo())
+      .then(file => {
         this.videoFile = file
         this.webcamPreview.srcObject = undefined
         this.props.finished(file, Math.round((this.state.ended - this.state.started) / 1000))
@@ -109,20 +115,27 @@ class WebRecorder extends React.Component {
           videoURL: window.URL.createObjectURL(file.data)
         })
       })
-      .then(() => {
-        this.unregister()
-      }, (error) => {
-        this.unregister()
-        toast.error(error.message)
-      })
-  }
+      .then(
+        () => {
+          this.unregister()
+        },
+        error => {
+          this.unregister()
+          toast.error(error.message)
+        }
+      )
+  };
 
   getVideo = () => {
     const mimeType = this.recordingChunks[0].type
     const fileExtension = getFileTypeExtension(mimeType)
 
     if (!fileExtension) {
-      return Promise.reject(new Error(`Could not retrieve recording: Unsupported media type "${mimeType}"`))
+      return Promise.reject(
+        new Error(
+          `Could not retrieve recording: Unsupported media type "${mimeType}"`
+        )
+      )
     }
 
     const name = `NoID${Date.now()}.${fileExtension}`
@@ -138,7 +151,7 @@ class WebRecorder extends React.Component {
     }
 
     return Promise.resolve(file)
-  }
+  };
 
   render () {
     const { recorderReady, recording, finished, videoURL } = this.state
@@ -152,8 +165,8 @@ class WebRecorder extends React.Component {
         className={style.videoContainer}
         key='video'
         style={{
-          width: `${(r * 2) - 8}px`,
-          height: `${(r * 2) - 8}px`
+          width: `${r * 2 - 8}px`,
+          height: `${r * 2 - 8}px`
         }}
       >
         <video
@@ -163,17 +176,20 @@ class WebRecorder extends React.Component {
           muted
           className={style.video}
           loop
-          ref={(ref) => { this.webcamPreview = ref }}
+          ref={ref => {
+            this.webcamPreview = ref
+          }}
         />
       </div>,
       <div
         key='webcamPlayerContainer'
         style={{
-          width: `${(r * 2) - 2}px`,
-          height: `${(r * 2) - 2}px`
+          position: 'absolute',
+          width: `${r * 2}px`,
+          height: `${r * 2}px`
         }}
       >
-        {finished &&
+        {finished && (
           <VideoPlayer
             key='webcamPlayer'
             url={videoURL}
@@ -185,36 +201,74 @@ class WebRecorder extends React.Component {
             simple
             shouldUpdate
           />
-        }
+        )}
       </div>,
-      <span key='controls'>
-        {recorderReady &&
-          [
-            <TiMediaRecord
-              key='recordButton'
-              className={classNames(style.record, (recording || finished) ? style.recordClicked : '')}
-              size={`${size * 0.25}px`}
-              fill='red'
-              style={{
-                margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
-                pointerEvents: (recorderReady && !finished) ? 'all' : 'none'
-              }}
-              onClick={this.record}
-            />,
-            <TiMediaStop
-              key='stopButton'
-              className={classNames(style.stopRecord, (recording) ? style.recordStarted : '')}
-              size={`${size * 0.25}px`}
-              fill='red'
-              style={{
-                margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
-                pointerEvents: (recording) ? 'all' : 'none'
-              }}
-              onClick={this.stopRecord}
-            />
-          ]
+      //    <TiMediaRecord
+      //    key="recordButton"
+      //    className={classNames(
+      //      style.record,
+      //      recording || finished ? style.recordClicked : ""
+      //    )}
+      //    size={`${size * 0.25}px`}
+      //    fill="red"
+      //    style={{
+      //      margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
+      //      pointerEvents: recorderReady && !finished ? "all" : "none"
+      //    }}
+      //    onClick={this.record}
+      //  />
+      <div key='controls' className={style.controls}>
+        {recorderReady && !finished &&
+        <img
+          src={recImage}
+          alt=''
+          className={style.recordBtn}
+          style={{
+            // margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
+            pointerEvents: 'all',
+            cursor: 'pointer'
+          }}
+          onClick={() => {
+            if (!this.state.recording) this.record()
+            else this.stopRecord()
+          }}
+        />
         }
-      </span>
+      </div>
+      //   <div className={style.iconsContainer}>
+      //     <img
+      //       src={trashIcon}
+      //       alt=''
+      //       className={`${style.recordBtn}`}
+      //       style={{
+      //         margin: ``,
+      //         pointerEvents: 'all',
+      //         cursor: 'pointer',
+      //         width: '40px',
+      //         marginRight: '9em',
+      //         marginTop: '-0.6em'
+      //       }}
+      //       onClick={() => {
+      //         if (this.state.recording) this.record()
+      //         else this.stopRecord()
+      //       }}
+      //     />
+      //     <img
+      //       src={checkIcon}
+      //       alt=''
+      //       className={`${style.recordBtn} ${style.trashIcon}`}
+      //       style={{
+      //         margin: `-${size * 0.125}px 0 0 -${size * 0.125}px`,
+      //         pointerEvents: 'all',
+      //         cursor: 'pointer'
+      //       }}
+      //       onClick={() => {
+      //         if (this.state.recording) this.record()
+      //         else this.stopRecord()
+      //       }}
+      //     />
+      //   </div>
+      // ) : (
     ]
   }
 }

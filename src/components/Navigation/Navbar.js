@@ -17,17 +17,13 @@ function Navbar (props) {
   return (
     <div className={style.bar} style={{ height: NAVBAR_HEIGHT }}>
       <div className={style.logoContainer}>
-        <Logo
-          height={20}
-          shortenAtWidthOf={600}
-        />
+        <Logo height={40} shortenAtWidthOf={600} />
       </div>
       <div className={style.iconContainer}>
-        {session.authenticated &&
-        [
+        {session.authenticated && [
           <IconButton disabled aria-label='show 17 new notifications'>
             <Badge badgeContent={0} color='error'>
-              <NotificationsIcon />
+              <NotificationsIcon style={{ color: 'white' }} />
             </Badge>
           </IconButton>,
           <IconButton
@@ -36,18 +32,18 @@ function Navbar (props) {
             aria-label='account of current user'
             aria-haspopup='true'
           >
-            <AccountCircle />
+            <AccountCircle style={{ color: 'white' }} />
           </IconButton>
-        ]
-        }
-        {!session.authenticated &&
-        <Link
-          to={`/login`}
-          className={style.login}
-        >
-          Login
-        </Link>
-        }
+        ]}
+        {!session.authenticated && (
+          <Link
+            to={`/login`}
+            className={style.login}
+            style={{ color: 'white' }}
+          >
+            Login
+          </Link>
+        )}
       </div>
     </div>
   )

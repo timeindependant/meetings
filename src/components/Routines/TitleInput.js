@@ -11,18 +11,25 @@ function checkInput (title, description) {
 }
 
 function TitleInput (props) {
-  const { dimensions, title, description, setValidInput, setTitle, setDescription } = props
+  const {
+    dimensions,
+    title,
+    description,
+    setValidInput,
+    setTitle,
+    setDescription
+  } = props
 
   useEffect(() => {
     setValidInput(checkInput(title, description))
   }, [])
 
-  const onChangeTitle = (e) => {
+  const onChangeTitle = e => {
     setTitle(e.target.value)
     setValidInput(checkInput(title, description))
   }
 
-  const onChangeDescription = (e) => {
+  const onChangeDescription = e => {
     setDescription(e.target.value)
     setValidInput(checkInput(title, description))
   }
@@ -30,23 +37,14 @@ function TitleInput (props) {
   return (
     <div
       className={style.inputContainer}
-      style={{ top: `${(dimensions.centerY * 1.2)}px` }}
+      style={{ top: `${dimensions.centerY * 1.2}px` }}
     >
       <input
         className={style.title}
         type='text'
-        placeholder='Add a Title'
+        placeholder='Title'
         value={title}
         onChange={onChangeTitle}
-      />
-      <textarea
-        className={style.description}
-        type='text'
-        cols='40'
-        rows='5'
-        placeholder='Add a Description'
-        value={description}
-        onChange={onChangeDescription}
       />
     </div>
   )

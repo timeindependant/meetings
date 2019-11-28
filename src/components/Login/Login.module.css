@@ -1,5 +1,5 @@
 .backgroundContainer {
-    background-image: url('/images/bg');
+    background-image: url('/images/radoslav-bali-ca3d4FYDf84-unsplash.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -19,7 +19,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(36, 40, 67, 0.5);
+    background-color: rgba(9, 13, 54, 0.2);
 }
 
 .icon {
@@ -29,7 +29,7 @@
     position: relative;
     transform: translateX(-50%);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    border-radius:50%;
+    border-radius: 50%;
     border: 1px solid black;
 }
 
@@ -107,7 +107,7 @@
 }
 
 .info {
-    text-align: center;    
+    text-align: center;
 }
 
 .img {
@@ -115,11 +115,11 @@
 }
 
 .infoText {
-    color : gray;
+    color: gray;
 }
 
 .thankyou {
-    margin : 30px 0 20px;
+    margin: 30px 0 20px;
 }
 
 .paper {

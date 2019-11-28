@@ -1,7 +1,10 @@
-import { MdNotInterested } from 'react-icons/md'
-import { GoBeaker } from 'react-icons/go'
-import { FaLaughBeam, FaBalanceScale } from 'react-icons/fa'
-import { IoIosCheckmarkCircle, IoIosHammer } from 'react-icons/io'
+import stop from './assets/stop.png'
+import solution from './assets/solution.png'
+import Check from './assets/check.png'
+import agenda from './assets/agenda.png'
+import summary from './assets/summary.png'
+import idea from './assets/idea.png'
+import balance from './assets/balance.png'
 
 export const MARKER_SIZE = 20
 
@@ -16,40 +19,48 @@ export const SIDEBAR_WIDTH = 320
 
 export const FLAVORS = [
   {
-    name: 'Neutral',
-    type: 'neutral',
-    color: '#7A869A',
-    icon: FaBalanceScale
-  },
-  {
-    name: 'Pro',
-    type: 'pro',
-    color: '#36B37E',
-    icon: IoIosCheckmarkCircle
-  },
-  {
-    name: 'Contra',
+    name: 'Contradiction',
     type: 'contra',
     color: '#E74949',
-    icon: MdNotInterested
+    icon: stop
   },
   {
-    name: 'Science',
-    type: 'science',
-    color: '#6554C0',
-    icon: GoBeaker
+    name: 'Support',
+    type: 'pro',
+    color: '#36B37E',
+    icon: Check
   },
   {
-    name: 'Joke',
-    type: 'joke',
-    color: '#ffAB00',
-    icon: FaLaughBeam
+    name: 'Neutral',
+    type: 'neutral',
+    color: '#7a8499',
+    icon: balance
   },
   {
-    name: 'Fact Check',
-    type: 'fact check',
-    color: '#2684FF',
-    icon: IoIosHammer
+    name: 'Solution',
+    type: 'solution',
+    color: '#ba85fb',
+    icon: solution
+  },
+
+  {
+    name: 'Idea',
+    type: 'idea',
+    color: '#f4d176',
+    icon: idea
+  },
+  {
+    name: 'Agenda Topic',
+    type: 'agenda',
+    color: '#79e1f1',
+    icon: agenda
+  },
+  {
+    name: 'Summary',
+    type: 'summary',
+    color: '#4894fc',
+    icon: summary,
+    size: 41
   }
 ]
 

@@ -53,11 +53,10 @@ function Accordion ({
           onClick={() => setOpen(!isOpen)}
         >
           {selectedFlavor.name}
-          <selectedFlavor.icon
-            size={20}
-            style={{
-              marginLeft: '8px'
-            }}
+          <img
+            src={selectedFlavor.icon}
+            style={{ width: '20px', marginLeft: '8px' }}
+            alt=''
           />
         </div>
       )}
@@ -77,7 +76,7 @@ function Accordion ({
           }}
           className={style.accordionArrow}
           size={25}
-          color={'black'}
+          color={'white'}
         />
       </div>
       <div

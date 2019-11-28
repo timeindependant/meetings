@@ -7,7 +7,9 @@ import style from './Logo.module.css'
 class Logo extends React.Component {
   constructor (props) {
     super(props)
-    this.mediaQuery = window.matchMedia(`(max-width: ${props.shortenAtWidthOf}px)`)
+    this.mediaQuery = window.matchMedia(
+      `(max-width: ${props.shortenAtWidthOf}px)`
+    )
     this.state = {
       short: this.mediaQuery.matches
     }
@@ -21,11 +23,11 @@ class Logo extends React.Component {
     this.mediaQuery.removeListener(this.queryChanged)
   }
 
-  queryChanged = (e) => {
+  queryChanged = e => {
     this.setState({
       short: e.matches
     })
-  }
+  };
   render () {
     const { height, center } = this.props
     const { short } = this.state
@@ -34,14 +36,14 @@ class Logo extends React.Component {
         <div
           className={style.logoContainer}
           style={{
-            width: (short) ? height * 0.7 : '',
-            margin: (center) ? 'auto' : '',
+            width: short ? height * 0.7 : '',
+            margin: center ? 'auto' : '',
             height: height
           }}
         >
           <img
-            src='/logo.svg'
-            alt='Diversus Logo'
+            src='/Timz@2x.png'
+            alt='Timz Logo'
             height='100%'
             className={style.logo}
           />
@@ -52,7 +54,7 @@ class Logo extends React.Component {
 }
 
 Logo.defaultProps = {
-  height: 25,
+  height: 40,
   short: false
 }
 

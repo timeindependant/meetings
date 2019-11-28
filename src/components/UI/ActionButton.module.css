@@ -10,11 +10,16 @@
   z-index: 1;
 }
 
+.editContainer {
+  bottom: unset;
+  top: 25px;
+}
+
 .abort {
   position: absolute;
   pointer-events: none;
   transition: transform 150ms ease-out,
-              opacity 150ms ease-out;
+    opacity 150ms ease-out;
 }
 
 .container:hover {
@@ -26,7 +31,7 @@
 }
 
 .bigBG {
-  background: #222642;
+  background: #7173EF;
   position: absolute;
   border-radius: 50%;
   transition: transform 150ms ease-out;
@@ -34,8 +39,8 @@
 
 .smallBG {
   position: absolute;
-  background: #FFF;
-  border: 2px solid #222642;
+  background: #7173EF;
+  border: 2px solid white;
   border-radius: 50%;
   transition: transform 150ms ease-out;
 }
@@ -43,15 +48,15 @@
 .icon {
   position: absolute;
   transition: transform 150ms ease-out,
-              opacity 150ms ease-out;
+    opacity 150ms ease-out;
 }
 
-.icon > :first-child {
+.icon> :first-child {
   transform-origin: 50% 50%;
   transition: scale 150ms ease-out;
 }
 
-.icon:hover > :first-child {
+.icon:hover> :first-child {
   transform: scale(1.1);
 }
 
