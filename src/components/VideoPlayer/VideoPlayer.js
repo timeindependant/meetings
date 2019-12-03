@@ -171,7 +171,7 @@ class VideoPlayer extends React.Component {
               playerOptions: {
                 transparent: true,
                 title: false,
-                // playsinline: true,
+                playsinline: true,
                 fun: false,
                 controls: false,
                 byline: false,
