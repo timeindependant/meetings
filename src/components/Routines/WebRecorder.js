@@ -163,6 +163,7 @@ class WebRecorder extends React.Component {
           muted
           className={style.video}
           loop
+          playsInline
           ref={(ref) => { this.webcamPreview = ref }}
         />
       </div>,
