@@ -99,7 +99,8 @@ class NodeRoutine extends React.Component {
 
   recorderFinished = (videoFile, duration) => {
     const formData = new FormData()
-    formData.append('fname', videoFile.name)
+    formData.append('fileName', videoFile.name)
+    formData.append('fileExtention', videoFile.fileExtention)
     formData.append('video', videoFile.data)
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/uploadLink`,
       {
