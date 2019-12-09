@@ -8,6 +8,7 @@ import { createRootNode, createCircles, deg2rad } from './DefaultFunctions'
 import { selectPetal } from '../Functions'
 
 import Petal from './Petal'
+import Axes from './Axes'
 
 import style from './FlowerRenderer.module.css'
 
@@ -327,9 +328,10 @@ class FlowerRenderer extends React.Component {
           transition: `transform ${MAGNIFY_SPEED}ms cubic-bezier(.4,0,.2,1)`
         }}
       >
-        {/* <Axes
+        <Axes
           key={'axes'}
-        /> */}
+          // zoom={divNodes[0].zoom}
+        />
         {divNodes.map((node, i) =>
           <div
             key={node.id}

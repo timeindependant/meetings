@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { NAVBAR_HEIGHT } from '../../Defaults'
 import * as d3 from 'd3'
 
 class Axes extends React.Component {
@@ -29,7 +30,7 @@ class Axes extends React.Component {
       .attr('x2', dimensions.width)
       .attr('y2', 5000)
       // .style('stroke', 'url(#lgrad)')
-      .style('stroke', '#85d7ea')
+      .style('stroke', '#D3D3D3')
       .style('stroke-width', 1)
       .style('transform', d => `rotate(${d}deg)`)
       .style('transform-origin', `${dimensions.width}px ${dimensions.height}px`)
@@ -45,7 +46,7 @@ class Axes extends React.Component {
       .attr('x2', dimensions.width)
       .attr('y2', dimensions.height - (dimensions.maxDimension * 0.35))
       // .attr('stroke', 'url(#lgrad)')
-      .style('stroke', '#85d7ea')
+      .style('stroke', '#D3D3D3')
       .style('stroke-width', 1)
       .style('transform', d => `rotate(${d}deg)`)
       .style('transform-origin', `${dimensions.width}px ${dimensions.height}px`)
@@ -58,7 +59,7 @@ class Axes extends React.Component {
         style={{
           position: 'absolute',
           zIndex: -1,
-          top: `-${Math.floor(dimensions.centerY)}px`,
+          top: `-${Math.floor(dimensions.centerY) + NAVBAR_HEIGHT}px`,
           left: `-${Math.floor(dimensions.centerX)}px`,
           // fill: '#979ca6',
           pointerEvents: 'none',
