@@ -102,7 +102,7 @@ class NodeRoutine extends React.Component {
     formData.append('fileName', videoFile.name)
     formData.append('fileExtention', videoFile.fileExtention)
     formData.append('video', videoFile.data)
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/uploadLink`,
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/uploadVideo`,
       {
         credentials: 'include',
         method: 'POST',

@@ -81,7 +81,7 @@ class FlowerRoutine extends React.Component {
     const formData = new FormData()
     formData.append('fname', videoFile.name)
     formData.append('video', videoFile.data)
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/uploadLink`,
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/uploadVideo`,
       {
         credentials: 'include',
         method: 'POST',
