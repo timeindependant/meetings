@@ -26,16 +26,17 @@ class Login extends React.Component {
       <div className={style.backgroundContainer}>
         <div className={style.container}>
           <Grid container className={style.mainGrid}>
-            <Grid item xs={12} sm={6} className={style.section}>
-              <Description />
+            <Grid item xs={12} sm={3} className={style.section}>
+              {/* <Description /> */}
             </Grid>
-            <Grid item xs={12} sm={6} className={style.section}>
+            <Grid item xs={12} sm={9} className={style.section}>
               <Paper
                 className={style.paper}
                 children={[
                   <div className={style.heading}>
                     <Logo
-                      shortenAtWidthOf={400}
+                      shortenAtWidthOf={300}
+                      height={40}
                       center
                     />
                   </div>,

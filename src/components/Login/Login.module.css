@@ -1,5 +1,5 @@
 .backgroundContainer {
-    background-image: url('/images/bg');
+    background-image: url('/images/login1.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -19,7 +19,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(36, 40, 67, 0.5);
+    /* background-color: rgba(36, 40, 67, 0.5);  */
 }
 
 .icon {
@@ -35,6 +35,7 @@
 
 .form {
     display: inline-block;
+    margin-top: 25px;
     width: 100%;
 }
 
@@ -42,10 +43,14 @@
     width: 100%;
 }
 
+.textField {
+    background: #E8E8E8;
+}
+
 .submit {
     width: 100%;
     display: block;
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 10px 60px;
     border-radius: 5px;
     font-size: 0.8em;
@@ -110,8 +115,13 @@
     text-align: center;    
 }
 
-.img {
+.check {
+    color: white;
     width: 50px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-top: 25px;
+    background: #2CC495;
 }
 
 .infoText {
@@ -119,12 +129,14 @@
 }
 
 .thankyou {
-    margin : 30px 0 20px;
+    margin : 30px 0 0;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 .paper {
     padding: 50px 30px;
     margin: auto;
-    border-radius: 20px;
-    max-width: 250px;
+    border-radius: 20px !important;
+    max-width: 300px;
 }

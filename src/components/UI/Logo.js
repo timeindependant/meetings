@@ -27,24 +27,32 @@ class Logo extends React.Component {
     })
   }
   render () {
-    const { height, center } = this.props
+    const { height, center, dark } = this.props
     const { short } = this.state
     return (
       <Link to={`/`}>
         <div
           className={style.logoContainer}
           style={{
-            width: (short) ? height * 0.7 : '',
             margin: (center) ? 'auto' : '',
             height: height
           }}
         >
           <img
-            src='/logo.svg'
-            alt='Diversus Logo'
-            height='100%'
-            className={style.logo}
+            src='/images/timz_logo.png'
+            alt='Timz Logo'
+            height='90%'
+            style={{
+              marginRight: `${height * 0.4}px`
+            }}
           />
+          {!short &&
+          <img
+            src={`/images/timz_font_solo_${(dark) ? 'dark' : 'light'}.svg`}
+            alt='Timz Lettering'
+            height='100%'
+          />
+          }
         </div>
       </Link>
     )
@@ -53,7 +61,8 @@ class Logo extends React.Component {
 
 Logo.defaultProps = {
   height: 25,
-  short: false
+  short: false,
+  dark: true
 }
 
 Logo.propTypes = {

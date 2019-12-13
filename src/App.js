@@ -16,9 +16,6 @@ import AdminArea from './components/Admin/AdminArea'
 import FlowerView from './components/FlowerView'
 import FlowerRoutine from './components/Routines/FlowerRoutine'
 
-import Home from './components/Home/Home'
-import Test from './test'
-
 const MOBILE_BREAKPOINT = 1200
 
 class App extends Component {
@@ -97,7 +94,6 @@ class App extends Component {
           <div>
             <Switch location={location}>
               <Route path='/admin' exact component={AdminArea} />
-              <Route path='/home' exact component={Test} />
               <Route path='/login' exact render={() => <Login />} />
               <Route
                 render={() => (

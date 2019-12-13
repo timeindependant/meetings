@@ -8,11 +8,14 @@ export default function Info ({ icon, text1, text2 }) {
     <div className={style.info}>
       <MdDone
         size='50'
-        color='green'
-        className={style.img}
+        className={style.check}
       />
-      <p className={style.infoText}>Magic link sent.</p>
-      <div className={style.thankyou}>Please check you inbox.</div>
+      <p className={style.infoText}>
+        We have sent a link on your email.
+        <br />
+        Please use it for login.
+      </p>
+      <div className={style.thankyou}>Thank You!</div>
     </div>
   )
 }

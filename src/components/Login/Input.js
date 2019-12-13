@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-import style from './Login.module.css'
 import Textfield from '../UI/Textfield'
+
+import style from './Login.module.css'
 
 const validateEmail = (email) => {
   var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -39,6 +40,7 @@ export default ({ handleSubmit, disabled, error }) => {
     >
       <Textfield
         onChange={handleChange}
+        className={style.textField}
         type='email'
         autoComplete='email'
         error={(!state.didChange) ? error : undefined}
