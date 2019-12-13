@@ -11,7 +11,7 @@ import Tab from '@material-ui/core/Tab'
 import FlowerItem from './FlowerItem'
 import Navbar from '../Navigation/Navbar'
 import SidebarLeft from '../Navigation/SidebarLeft'
-import Searchbar from './Searchbar'
+// import Searchbar from './Searchbar'
 
 function TabPanel (props) {
   const { children, value, index } = props
@@ -28,6 +28,13 @@ function a11yProps (index) {
     id: `full-width-tab-${index}`,
     'aria-controls': `full-width-tabpanel-${index}`
   }
+}
+
+const tabStyle = {
+  textTransform: 'none',
+  color: 'white',
+  fontWeight: 'bold',
+  fontSize: '15px'
 }
 
 class Navigation extends React.Component {
@@ -57,11 +64,15 @@ class Navigation extends React.Component {
         sideBarOpen={sideBarOpen}
         toggleSideBar={toggleSideBar}
       >
-        <Searchbar />
         <AppBar
           position='static'
           color='primary'
-          style={{ width: '320px', boxShadow: 'none' }}
+          style={{
+            width: '100%',
+            boxShadow: 'none',
+            marginTop: '1em',
+            background: '#05082B'
+          }}
         >
           <Tabs
             value={value}
@@ -74,20 +85,20 @@ class Navigation extends React.Component {
           >
             <Tab
               wrapped
-              style={{ textTransform: 'none' }}
+              style={tabStyle}
               label='All'
               {...a11yProps(0)}
             />
             <Tab
               wrapped
-              style={{ textTransform: 'none' }}
-              label='Popular'
+              style={tabStyle}
+              label='Newest'
               {...a11yProps(1)}
             />
             <Tab
               wrapped
-              style={{ textTransform: 'none' }}
-              label='My Flowers'
+              style={tabStyle}
+              label='Self-Hosted'
               {...a11yProps(1)}
             />
           </Tabs>

@@ -19,7 +19,7 @@ function Navbar (props) {
       <div className={style.logoContainer}>
         <Logo
           height={20}
-          shortenAtWidthOf={600}
+          justLettering
         />
       </div>
       <div className={style.iconContainer}>

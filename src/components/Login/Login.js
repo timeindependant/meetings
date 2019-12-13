@@ -38,6 +38,7 @@ class Login extends React.Component {
                       shortenAtWidthOf={300}
                       height={40}
                       center
+                      dark
                     />
                   </div>,
                   (session.loginLinkSuccess) ? (

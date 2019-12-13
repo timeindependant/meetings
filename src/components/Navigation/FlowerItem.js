@@ -55,7 +55,7 @@ class FlowerItem extends React.Component {
     return (
       <div
         className={style.container}
-        style={{ background: isSelected ? '#E7E9EF' : 'white' }}
+        style={{ background: isSelected ? '#1B1D3F' : '' }}
       >
         <div className={style.right}>
           <div
