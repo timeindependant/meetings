@@ -16,7 +16,7 @@
   /* font-weight: bold; */
   font-size: 1em;
   cursor: pointer;
-  color: #222642;
+  color: white;
   display: flex;
   align-items: center;
   pointer-events: all;
@@ -31,6 +31,7 @@
 
 .accordionContent {
   padding: 1em 0;
+  color: white;
 }
 
 .line {
@@ -42,13 +43,13 @@
 }
 
 .views {
-  color: #242843;
+  color: #DDD;
   font-size: 0.9em;
 }
 
 .petals {
   padding-left: 10px;
-  color: #242843;
+  color: #DDD;
   font-size: 0.9em;
 }
 
@@ -75,7 +76,7 @@
 
 .date {
   padding-left: 20px;
-  color: rgb(27, 26, 26);
+  color: #DDD;
 }
 
 .outerClickContainer {
@@ -84,7 +85,7 @@
   z-index: 2;
   top: 0px;
   left: 0;
-  background: white;
+  background: #05082B;
   transition: opacity 150ms ease-out;
 }
 

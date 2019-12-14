@@ -4,6 +4,7 @@ body {
   font-family: "Nunito", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: white;
 }
 
 a {
@@ -12,11 +13,11 @@ a {
 }
 
 a:link {
-  color: black;
+  color: white;
 }
 
 a:visited {
-  color: black;
+  color: white;
 }
 
 a:active {

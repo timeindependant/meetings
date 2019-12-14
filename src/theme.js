@@ -10,10 +10,10 @@ const theme = createMuiTheme({
       main: '#fff'
     },
     secondary: {
-      main: '#FC1A45'
+      main: '#fff'
     },
     notification: {
-      main: '#FC1A45'
+      main: '#fff'
     },
     error: {
       main: '#FC1A45'
@@ -25,6 +25,15 @@ const theme = createMuiTheme({
   breakpoints: {
     values: {
       sm: 700
+    }
+  },
+  overrides: {
+    MuiIconButton: {
+      root: {
+        '&$buttonDisabled': {
+          color: 'white'
+        }
+      }
     }
   }
 })

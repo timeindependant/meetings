@@ -129,7 +129,7 @@ class App extends Component {
                 width: '100%',
                 position: 'absolute',
                 zIndex: 2000,
-                background: 'white',
+                background: '#05082B',
                 top: '60px'
               }}
             >

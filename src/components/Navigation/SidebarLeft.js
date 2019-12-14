@@ -6,6 +6,7 @@ import { SIDEBAR_WIDTH, NAVBAR_HEIGHT } from '../../Defaults'
 import { startAddFlowerRoutine } from '../../state/globals/actions'
 
 import SVG from '../UI/SVG'
+import ActionButtonSimplest from '../UI/ActionButtonSimplest'
 
 import style from './SidebarLeft.module.css'
 
@@ -89,15 +90,14 @@ class SidebarLeft extends React.Component {
           style={{
             bottom: '25px',
             right: (full) ? '25px' : '',
-            left: (!full && sideBarOpen) ? '150px' : '',
+            left: (!full && sideBarOpen) ? SIDEBAR_WIDTH * 0.5 : '',
+            transform: (!full && sideBarOpen) ? 'translateX(-50%)' : '',
             visibility: (!full && !sideBarOpen) ? 'hidden' : 'visible'
           }}
           onClick={() => { this.props.startAddFlowerRoutine() }}
         >
-          <MdAdd
-            size={25}
-            color={'white'}
-            className={style.abort}
+          <ActionButtonSimplest
+            size={45}
           />
         </div>
         }

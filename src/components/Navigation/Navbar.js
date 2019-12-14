@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
-import AccountCircle from '@material-ui/icons/AccountCircleSharp'
-import NotificationsIcon from '@material-ui/icons/Notifications'
+import { MdAccountCircle, MdNotifications } from 'react-icons/md'
 import Badge from '@material-ui/core/Badge'
 
 import Logo from '../UI/Logo'
@@ -26,8 +25,14 @@ function Navbar (props) {
         {session.authenticated &&
         [
           <IconButton disabled aria-label='show 17 new notifications'>
-            <Badge badgeContent={0} color='error'>
-              <NotificationsIcon />
+            <Badge
+              badgeContent={1}
+              variant='dot'
+              color='error'
+            >
+              <MdNotifications
+                color='white'
+              />
             </Badge>
           </IconButton>,
           <IconButton
@@ -36,7 +41,9 @@ function Navbar (props) {
             aria-label='account of current user'
             aria-haspopup='true'
           >
-            <AccountCircle />
+            <MdAccountCircle
+              color='white'
+            />
           </IconButton>
         ]
         }
