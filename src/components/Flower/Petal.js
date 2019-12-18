@@ -36,7 +36,8 @@ class Petal extends React.Component {
   }
 
   state = {
-    wasSelected: false
+    wasSelected: false,
+    thumbURL: undefined
   };
 
   circumference = 1;
@@ -67,6 +68,13 @@ class Petal extends React.Component {
 
   //   return false
   // }
+
+  componentDidMount () {
+    const { video } = this.props
+    fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${video.url}`)
+      .then(response => response.json())
+      .then(json => this.setState({ thumbURL: json.thumbnail_url }))
+  }
 
   handleClick = event => {
     const { id, isRootNode, node } = this.props
@@ -101,7 +109,7 @@ class Petal extends React.Component {
       globals,
       flavor
     } = this.props
-    const { wasSelected } = this.state
+    const { wasSelected, thumbURL } = this.state
 
     const Flavor = getFlavor(flavor)
 
@@ -154,10 +162,12 @@ class Petal extends React.Component {
             border: `solid 1px ${color}`
           }}
         >
+          {thumbURL &&
           <img
             className={style.image}
-            // src={`https://img.youtube.com/vi/${video.url}/sddefault.jpg`}
+            src={thumbURL}
           />
+          }
           {/* <div className={style.image} style={{ background: 'white' }} /> */}
           <div
             className={style.overlayColor}
