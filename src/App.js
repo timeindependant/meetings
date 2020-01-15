@@ -139,7 +139,7 @@ class App extends Component {
                   <FloatingButton
                     onClickCallback={() => {
                       if (iOS) {
-                        window.open('https://2d2rw.test-app.link/F2alTNrrh3')
+                        window.open('https://2d2rw.test-app.link/addvideo')
                       } else {
                         this.toggleAddFlowerOverlay()
                       }
