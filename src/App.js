@@ -48,7 +48,8 @@ class App extends Component {
   state = {
     flowerOverlayVisible: false,
     sideBarOpen: this.props.dimensions.width > MOBILE_BREAKPOINT,
-    selectedFlower: this.props.globals.selectedFlower
+    selectedFlower: this.props.globals.selectedFlower,
+    iOS: !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
   }
 
   componentDidMount () {
@@ -94,7 +95,7 @@ class App extends Component {
 
   render () {
     const { session, globals, dimensions } = this.props
-    const { sideBarOpen } = this.state
+    const { sideBarOpen, iOS } = this.state
     return (
       <Route
         render={({ location }) => (
@@ -136,7 +137,13 @@ class App extends Component {
                 exact
                 render={() => (
                   <FloatingButton
-                    onClickCallback={this.toggleAddFlowerOverlay}
+                    onClickCallback={() => {
+                      if (iOS) {
+                        window.open('https://2d2rw.test-app.link/F2alTNrrh3')
+                      } else {
+                        this.toggleAddFlowerOverlay()
+                      }
+                    }}
                   />
                 )}
               />
