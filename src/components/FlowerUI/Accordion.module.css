@@ -1,0 +1,100 @@
+.accordionItem {
+  transition: transform 200ms ease-out, opacity 150ms ease-out;
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: none;
+  position: absolute;
+}
+
+.collapsed {
+  transform: translateY(-25px);
+  opacity: 0;
+}
+
+.accordionTitle {
+  font-family: "Sarabun", sans-serif;
+  /* font-weight: bold; */
+  font-size: 1em;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  pointer-events: all;
+}
+
+.accordionArrow {
+  transition: transform 150ms ease-out;
+  display: inline-block;
+  position: relative;
+  margin-left: 10px;
+}
+
+.accordionContent {
+  padding: 1em 0;
+  color: white;
+}
+
+.line {
+  color: rgb(238, 238, 238);
+}
+
+.viewsPetals {
+  padding: 1em 0 0;
+}
+
+.views {
+  color: #DDD;
+  font-size: 0.9em;
+}
+
+.petals {
+  padding-left: 10px;
+  color: #DDD;
+  font-size: 0.9em;
+}
+
+.viewsIcon {
+  width: 13px !important;
+  height: 13px !important;
+  color: red;
+}
+
+.petalIcon {
+  width: 11px !important;
+  height: 11px !important;
+  color: red;
+}
+
+.bottomContainer {
+  padding: 1em 0 0em;
+  display: flex;
+}
+
+.bottomContainerText {
+  font-size: 0.8em;
+}
+
+.date {
+  padding-left: 20px;
+  color: #DDD;
+}
+
+.outerClickContainer {
+  position: fixed;
+  transform: translate(0);
+  z-index: 2;
+  top: 0px;
+  left: 0;
+  background: #05082B;
+  transition: opacity 150ms ease-out;
+}
+
+.flavor {
+  font-family: "Sarabun", sans-serif;
+  font-weight: bold;
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  font-size: 1.3em;
+  cursor: pointer;
+}

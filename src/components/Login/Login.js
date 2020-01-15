@@ -1,52 +1,60 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 
-import { requestLoginLink } from '../../state/actions/session'
+import { requestLoginLink } from '../../state/session/actions'
 
 import style from './Login.module.css'
 
-function validateEmail (email) {
-  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return re.test(String(email).toLowerCase())
-}
+import Description from './Description'
+import Input from './Input'
+import Info from './Info'
+import Logo from '../UI/Logo'
 
 class Login extends React.Component {
-  constructor (props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.state = {
-      value: ''
+  handleSubmit = (value) => {
+    const { session } = this.props
+    if (!session.loginLinkLoading && !session.loginLinkSuccess) {
+      this.props.requestLoginLink(value)
     }
   }
 
-  handleChange (e) {
-    this.setState({
-      value: e.target.value,
-      isMail: validateEmail(e.target.value)
-    })
-  }
-
-  handleSubmit (e) {
-    e.preventDefault()
-    this.props.requestLoginLink(this.state.value)
-  }
-
   render () {
-    const { value, isMail } = this.state
+    const { session } = this.props
     return (
-      <div className={style.container}>
-        <h1 className={style.title}>Request a login link.</h1>
-        <form onSubmit={this.handleSubmit} className={style.form} autoComplete='on'>
-          <input
-            className={style.input}
-            type='email'
-            placeholder='Email'
-            value={value}
-            onChange={this.handleChange}
-          />
-          <input disabled={!isMail} className={style.submit} type='submit' value='Submit' />
-        </form>
+      <div className={style.backgroundContainer}>
+        <div className={style.container}>
+          <Grid container className={style.mainGrid}>
+            <Grid item xs={12} sm={3} className={style.section}>
+              {/* <Description /> */}
+            </Grid>
+            <Grid item xs={12} sm={9} className={style.section}>
+              <Paper
+                className={style.paper}
+                children={[
+                  <div className={style.heading}>
+                    <Logo
+                      shortenAtWidthOf={300}
+                      height={40}
+                      center
+                      dark
+                    />
+                  </div>,
+                  (session.loginLinkSuccess) ? (
+                    <Info />
+                  ) : (
+                    <Input
+                      handleSubmit={this.handleSubmit}
+                      error={(session.loginLinkFailed) ? 'Please try again.' : undefined}
+                      disabled={session.loginLinkLoading}
+                    />
+                  )
+
+                ]} />
+            </Grid>
+          </Grid>
+        </div>
       </div>
     )
   }

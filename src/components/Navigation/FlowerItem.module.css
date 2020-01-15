@@ -1,75 +1,104 @@
 .container {
-    display: flex;
-    max-width: 500px;
-    min-width: 300px;
-    margin: 30px auto;
-    position: relative;
+  display: flex;
+  min-width: 300px;
+  height: 130px;
+  position: relative;
+  border-radius: 0px;
+  max-width: 320px;
+  color: white;
 }
 
 .block {
-    display: inline-block;
-    padding: 0 15px;
+  display: inline-block;
 }
 
 .left {
-    width: 75%;
+  width: 70%;
 }
 
 .edit {
-    position: absolute;
-    top: 0;
-    right: 20px;
+  position: absolute;
+  bottom: 11px;
+  right: 30px;
 }
 
 .delete {
-    position: absolute;
-    top: 0;
-    right: 0;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .right {
-    width: 25%;
-    margin-left: 20px;
+  width: 30%;
+  margin-left: 20px;
 }
 
 .image {
-    min-width: 100%;
-    padding-top: 100%;
-    background: #DDD;
-    border-radius: 80px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+  width: 80%;
+  /* max-width: 100px; */
+  padding-top: 80%;
+  background: #ddd;
+  border-radius: 50%;
+  background-size: 180%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
 }
 
 .title {
-    font-size: 1.2em;
-    font-weight: bold;
+  font-family: "Sarabun", sans-serif;
+  font-size: 1em;
+  margin-top: 20px;
+  padding: 0 5px;
+  height: 2.7em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.text {
-    font-size: 0.8em;
-    margin: 0;
-    margin-left: 10px;
+.petalContainer {
+  padding: 0 10px;
+  font-size: 0.8em;
+  margin: 5px 0 5px 0;
+  display: table;
+}
+
+.middleContainer {
+  display: flex;
+  padding: 5px 10px 0px 0px;
+}
+
+.bottomContainer {
+  display: flex;
+  padding: 8px 5px;
+}
+
+.middleContainerText {
+  font-size: 0.9em;
+}
+
+.bottomContainerText {
+  font-size: 0.79em;
+}
+
+.itemPadding {
+  padding-left: 5px;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  vertical-align: bottom;
+  color: red;
+}
+
+.viewsText {
+  display: inline-block;
+  color: white;
 }
 
 .date {
-    right: 0;
-    bottom: 0px;
-    position: absolute;
-    font-size: 0.8em;
-    margin: 0 15px;
-}
-
-.user {
-    position: absolute;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-}
-
-.username {
-    font-size: 0.8em;
-    font-weight: bold;
-    margin-left: 0.5em;
+  font-size: 0.79em;
+  color: white;
 }

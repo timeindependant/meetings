@@ -1,62 +1,64 @@
 .container {
     position: relative;
-    z-index: 1;
-    width: 100%;
-    background: white;
-    top: 0;
-    height: 100vh;
     overflow: hidden;
-    box-shadow: -19px 0 38px rgba(0,0,0,0.10);
+    background: #05082B;
 }
 
-.navigation {
-    position: fixed;
-    z-index: 1;
+.renderContainer {
+    height: 100%;
     width: 100%;
+    position: absolute;
+    transition: transform 200ms ease-out;
+    will-change: transform;
 }
 
-.close {
+.outerClickContainer {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px;
 }
 
-.settings {
+.editPetal {
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
+    bottom: 33px;
+    right: 130px;
     cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
 }
 
-.title {
-    font-size: 1.5em;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 0px;
-}
-
-.subtitle {
-    margin-top: 0px;
-    font-size: 0.8em;
-    text-align: center;
-}
-
-.edit {
+.deletePetal {
     position: absolute;
     z-index: 2;
     bottom: 33px;
-    right: 120px;
+    right: 95px;
     cursor: pointer;
 }
 
-.delete {
-    position: absolute;
-    z-index: 2;
-    bottom: 30px;
-    right: 80px;
-    cursor: pointer;
+.metaContainer {
+    height: 100%;
+    pointer-events: none;
 }
+
+.seedInfo {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    pointer-events: none;
+}
+
+.petalInfo {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    pointer-events: none;
+}
+
+@media (max-width:600px) {
+    .seedInfo {
+      left: 15px;
+      top: 15px;
+    }
+    
+    .petalInfo {
+        left: 15px;
+    }
+  }

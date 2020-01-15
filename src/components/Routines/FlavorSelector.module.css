@@ -1,0 +1,44 @@
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.icon {
+    position: relative;
+    /* top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    border-radius: 50%;
+    opacity: 0;
+    animation: transitionIn 500ms ease-out forwards;
+}
+
+.iconContainer {
+    transform-origin: 50% 50%;
+    transform: scale(1);
+    transition: transform 150ms ease-out;
+    user-select: none;
+}
+
+.iconContainer:hover {
+    transform: scale(1.1);
+}
+
+.iconContainer:active {
+    transform: scale(1);
+}
+
+.title {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    position: absolute;
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+@keyframes transitionIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

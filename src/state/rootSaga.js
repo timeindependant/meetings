@@ -1,8 +1,9 @@
 import { all } from 'redux-saga/effects'
 
-import { loginSaga, loginLinkSaga } from './sagas/sessionSagas'
-import { addFlowerSaga, listFlowerSaga } from './sagas/flowerListSaga'
-import { getFlowerSaga, addNodeSaga } from './sagas/flowerDataSaga'
+import { loginSaga, loginLinkSaga } from './session/sagas'
+import { listFlowerSaga } from './flowerList/sagas'
+import { getFlowerSaga } from './flowerData/sagas'
+import { addNodeSaga, editNodeSaga, addFlowerSaga, editFlowerSaga } from './globals/sagas'
 
 export default function * rootSaga () {
   yield all([
@@ -11,6 +12,8 @@ export default function * rootSaga () {
     addFlowerSaga(),
     listFlowerSaga(),
     getFlowerSaga(),
-    addNodeSaga()
+    addNodeSaga(),
+    editNodeSaga(),
+    editFlowerSaga()
   ])
 }

@@ -1,30 +1,51 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { withRouter, Route, Switch } from 'react-router' // eslint-disable-line no-unused-vars
 import { toast } from 'react-toastify'
 import queryString from 'query-string'
 
-import './App.css'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { login } from './state/actions/session'
+import { login } from './state/session/actions'
+import { resize } from './state/dimensions/actions'
 
 import FloatingButton from './components/UI/FloatingButton'
-import Overlay from './components/UI/Overlay'
-import AddFlowerForm from './components/Forms/AddFlowerForm'
 import Navigation from './components/Navigation/Navigation'
 import Login from './components/Login/Login'
-import Hub from './components/User/Hub'
 import AdminArea from './components/Admin/AdminArea'
 import FlowerView from './components/FlowerView'
+import FlowerRoutine from './components/Routines/FlowerRoutine'
+
+const MOBILE_BREAKPOINT = 1200
 
 class App extends Component {
+  static getDerivedStateFromProps (props, state) {
+    const { dimensions, globals } = props
+    const { selectedFlower } = globals
+    if (state.selectedFlower !== selectedFlower) {
+      let sideBarOpen = state.sideBarOpen
+      if (dimensions.width < MOBILE_BREAKPOINT) {
+        // Close the Sidebar on mobile
+        sideBarOpen = false
+      }
+      return {
+        sideBarOpen,
+        selectedFlower
+      }
+    }
+    return {
+      selectedFlower
+    }
+  }
+
   state = {
-    flowerOverlayVisible: false
+    flowerOverlayVisible: false,
+    sideBarOpen: this.props.dimensions.width > MOBILE_BREAKPOINT,
+    selectedFlower: this.props.globals.selectedFlower
   }
 
   componentDidMount () {
+    window.addEventListener('resize', this.props.resize)
     toast.configure({
       position: 'top-right',
       autoClose: 3000,
@@ -37,11 +58,25 @@ class App extends Component {
       if (parsedQuery.token) {
         this.props.login(parsedQuery.token)
         const location = window.location.toString()
-        window.history.replaceState({}, document.title, location.substring(0, location.indexOf('?')))
+        window.history.replaceState(
+          {},
+          document.title,
+          location.substring(0, location.indexOf('?'))
+        )
       } else {
         this.props.login()
       }
     }
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.props.resize)
+  }
+
+  toggleSideBar = () => {
+    this.setState({
+      sideBarOpen: !this.state.sideBarOpen
+    })
   }
 
   toggleAddFlowerOverlay = () => {
@@ -51,60 +86,76 @@ class App extends Component {
   }
 
   render () {
-    const { session } = this.props
-    const { flowerOverlayVisible } = this.state
+    const { session, globals, dimensions } = this.props
+    const { sideBarOpen } = this.state
     return (
-      <Route render={({ location }) => (
-        <div>
-          <Switch location={location}>
-            <Route path='/' exact component={Navigation} />
-            <Route path='/admin' exact component={AdminArea} />
-            <Route
-              path='/login'
-              exact
-              render={() =>
-                <Login />
-              } />
-          </Switch>
-          <Hub />
-          {session.authenticated && location.pathname.startsWith('/flower') && location.pathname.slice(8) &&
-          <FlowerView
-            id={location.pathname.slice(8)}
-          />
-          }
-          {!session.authenticated && location.pathname.slice(8) &&
-            <h2 style={{
-              textAlign: 'center', top: '40%', position: 'absolute', width: '100%'
-            }}>
-              Please log in to see content.
-            </h2>
-          }
-          {session.authenticated &&
-            <Route path='/' exact render={() =>
-              <FloatingButton
-                onClickCallback={this.toggleAddFlowerOverlay}
+      <Route
+        render={({ location }) => (
+          <div>
+            <Switch location={location}>
+              <Route path='/admin' exact component={AdminArea} />
+              <Route path='/login' exact render={() => <Login />} />
+              <Route
+                render={() => (
+                  <Navigation
+                    sideBarOpen={sideBarOpen}
+                    toggleSideBar={this.toggleSideBar}
+                  >
+                    {globals.selectedFlower && (
+                      <FlowerView
+                        id={globals.selectedFlower}
+                        sideBarOpen={sideBarOpen}
+                      />
+                    )}
+                  </Navigation>
+                )}
               />
-            } />
-          }
-          <Overlay
-            visibility={flowerOverlayVisible}
-            onOuterClick={this.toggleAddFlowerOverlay}
-          >
-            <AddFlowerForm />
-          </Overlay>
-        </div>
-      )} />
+            </Switch>
+            {session.authenticated && (
+              <Route
+                path='/'
+                exact
+                render={() => (
+                  <FloatingButton
+                    onClickCallback={this.toggleAddFlowerOverlay}
+                  />
+                )}
+              />
+            )}
+            {(globals.addFlowerRoutineRunning || globals.editFlowerRoutineRunning) &&
+            <div
+              style={{
+                height: dimensions.height - 60,
+                width: '100%',
+                position: 'absolute',
+                zIndex: 2000,
+                background: '#05082B',
+                top: '60px'
+              }}
+            >
+              <FlowerRoutine />
+            </div>
+            }
+          </div>
+        )}
+      />
     )
   }
 }
 
 function mapStateToProps (state) {
-  const { session } = state
-  return { session }
+  const { session, globals, dimensions } = state
+  return { session, globals, dimensions }
 }
 
 const mapDispatchToProps = {
-  login
+  login,
+  resize
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+)

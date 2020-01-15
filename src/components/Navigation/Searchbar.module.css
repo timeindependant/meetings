@@ -1,0 +1,32 @@
+.container {
+  width: 95%;
+  position: relative;
+  margin: 10px 6px;
+  z-index: 1;
+  max-width: 500px;
+  text-align: center;
+}
+
+.input {
+  position: relative;
+  width: 90%;
+  margin: auto;
+  height: 35px;
+  font-size: 0.9em;
+  background: #f5f5f5;
+  border: none !important;
+  border-radius: 40px;
+  margin-top: 1.5em;
+  padding-left: 15px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.icon {
+  position: absolute;
+  color: #969696;
+  right: 26px;
+  top: 30px;
+}

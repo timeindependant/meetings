@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux'
+import { connectRouter } from 'connected-react-router'
 
-import flowerData from './reducers/flowerDataReducer'
-import flowerList from './reducers/flowerListReducer'
-import settings from './reducers/settingReducer'
-import session from './reducers/sessionReducer'
+import flowerData from './flowerData/reducer'
+import flowerList from './flowerList/reducer'
+import session from './session/reducer'
+import dimensions from './dimensions/reducer'
+import { connectGlobals } from './globals/reducer'
 
-export default combineReducers({
+export default (history) => combineReducers({
+  router: connectRouter(history),
   flowerList,
   flowerData,
-  settings,
-  session
+  session,
+  dimensions,
+  globals: connectGlobals(history)
 })

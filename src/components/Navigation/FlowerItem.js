@@ -5,41 +5,25 @@ import moment from 'moment'
 import { connect } from 'react-redux'
 import { MdEdit, MdClear } from 'react-icons/md'
 import { toast } from 'react-toastify'
-
-import { listFlowers } from '../../state/actions/flowerList'
-
-import RandomUserImage from '../Dummies/RandomUserImage'
-import Overlay from '../UI/Overlay'
-import EditFlowerFrom from '../Forms/EditFlowerForm'
+// import Eye from "/icons/views.svg";
+import { listFlowers } from '../../state/flowerList/actions'
+import { startEditFlowerRoutine } from '../../state/globals/actions'
 
 import style from './FlowerItem.module.css'
 
 class FlowerItem extends React.Component {
-  state = {
-    editFlowerVisibility: false
-  }
-
-  toggleEdit = (e) => {
-    e.preventDefault()
-    this.setState({
-      editFlowerVisibility: !this.state.editFlowerVisibility
-    })
-  }
-
-  delete = (e) => {
+  delete = e => {
     const { title, id } = this.props
     e.preventDefault()
     if (window.confirm(`Are you sure you want to delete ${title}?`)) {
-      fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/flower`,
-        {
-          credentials: 'include',
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ id })
-        })
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/flower`, {
+        credentials: 'include',
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+      })
         .then(response => {
           if (response.ok) {
             return response
@@ -57,49 +41,73 @@ class FlowerItem extends React.Component {
   }
 
   render () {
-    const { title, id, videoId, description, created, user, session } = this.props
-    const { editFlowerVisibility } = this.state
+    const {
+      title,
+      id,
+      videoId,
+      description,
+      created,
+      user,
+      session,
+      isSelected
+    } = this.props
+
     return (
-      <div className={style.container}>
+      <div
+        className={style.container}
+        style={{ background: isSelected ? '#1B1D3F' : '' }}
+      >
         <div className={style.right}>
           <div
-            style={{ backgroundImage: `url(https://img.youtube.com/vi/${videoId}/sddefault.jpg)` }}
+            style={{
+              backgroundImage: `url(https://img.youtube.com/vi/${videoId}/sddefault.jpg)`
+            }}
             className={style.image}
           />
         </div>
         <div className={classnames(style.block, style.left)}>
           <div className={style.title}>{title}</div>
-          <p className={style.text}>{description}</p>
-          {session.authenticated && (session.role === 'admin' || session.id === user.id) &&
-          [
+          <div className={style.middleContainer}>
             <div
-              key='edit'
-              className={classnames(style.edit)}
-              onClick={this.toggleEdit}
+              className={classnames(
+                style.middleContainerText,
+                style.itemPadding
+              )}
             >
-              <MdEdit color='grey' />
-            </div>,
-            <div
-              key='delete'
-              className={classnames(style.delete)}
-              onClick={this.delete}
-            >
-              <MdClear color='grey' size='1.1em' />
-            </div>,
-            <Overlay key='editOverlay' visibility={editFlowerVisibility} onOuterClick={this.toggleEdit}>
-              <EditFlowerFrom
-                title={title}
-                description={description}
-                id={id}
-              />
-            </Overlay>
-          ]
-          }
-          <div className={classnames(style.date)}>{moment(created).fromNow()}</div>
-          <div className={style.user}>
-            <RandomUserImage round />
-            <div className={classnames(style.username)}>{user.name}</div>
+              {user.name}
+            </div>
           </div>
+          <div className={style.bottomContainer}>
+            <div className={classnames(style.bottomContainerText)}>
+              <img
+                className={style.icon}
+                src={process.env.PUBLIC_URL + '/icons/views.svg'}
+              />{' '}
+              <div className={style.viewsText}>1,234</div>
+            </div>
+            <div className={classnames(style.date, style.itemPadding)}>
+              {moment(created).fromNow()}
+            </div>
+          </div>
+          {
+            session.authenticated &&
+            (session.role === 'admin' || session.id === user.id) &&
+            [
+              <div
+                key='edit'
+                className={classnames(style.edit)}
+                onClick={() => { this.props.startEditFlowerRoutine(id, { title, description, url: videoId }) }}
+              >
+                <MdEdit color='grey' />
+              </div>,
+              <div
+                key='delete'
+                className={classnames(style.delete)}
+                onClick={this.delete}
+              >
+                <MdClear color='grey' size='1.1em' />
+              </div>
+            ]}
         </div>
       </div>
     )
@@ -125,7 +133,10 @@ function mapStateToProps (state) {
 }
 
 const mapDispatchToProps = {
-  listFlowers
+  listFlowers, startEditFlowerRoutine
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FlowerItem)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FlowerItem)
