@@ -22,6 +22,13 @@ class App extends Component {
   static getDerivedStateFromProps (props, state) {
     const { dimensions, globals } = props
     const { selectedFlower } = globals
+    if (globals.embedded) {
+      return {
+        sideBarOpen: false,
+        selectedFlower
+      }
+    }
+
     if (state.selectedFlower !== selectedFlower) {
       let sideBarOpen = state.sideBarOpen
       if (dimensions.width < MOBILE_BREAKPOINT) {
@@ -95,6 +102,18 @@ class App extends Component {
             <Switch location={location}>
               <Route path='/admin' exact component={AdminArea} />
               <Route path='/login' exact render={() => <Login />} />
+              <Route
+                path='/iframe/:id'
+                exact
+                render={
+                  () =>
+                    globals.selectedFlower && (
+                      <FlowerView
+                        id={globals.selectedFlower}
+                        sideBarOpen={sideBarOpen}
+                      />
+                    )
+                } />
               <Route
                 render={() => (
                   <Navigation

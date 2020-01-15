@@ -29,16 +29,23 @@ import { LOCATION_CHANGE } from 'connected-react-router/esm/actions'
 function getFlowerAndPetalFromLocation (location) {
   let selectedFlower = ''
   let selectedPetal = ''
+  let embedded = false
   if (location.pathname.startsWith('/flower/')) {
     selectedFlower = location.pathname.slice(8) || ''
     selectedPetal = parseInt(queryString.parse(location.search).s) || ''
   }
 
-  return { selectedFlower, selectedPetal }
+  if (location.pathname.startsWith('/iframe/')) {
+    embedded = true
+    selectedFlower = location.pathname.slice(8) || ''
+    selectedPetal = parseInt(queryString.parse(location.search).s) || ''
+  }
+
+  return { selectedFlower, selectedPetal, embedded }
 }
 
 export function connectGlobals (history) {
-  const { selectedFlower, selectedPetal } = getFlowerAndPetalFromLocation(history.location)
+  const { selectedFlower, selectedPetal, embedded } = getFlowerAndPetalFromLocation(history.location)
   const initialState = {
     addNodeRoutineRunning: false,
     editNodeRoutineRunning: false,
@@ -69,6 +76,7 @@ export function connectGlobals (history) {
     addedNodePosition: 0,
     selectedFlower,
     selectedPetal,
+    embedded,
     rootDuration: 0,
     petalDuration: 0
   }
@@ -77,11 +85,12 @@ export function connectGlobals (history) {
     switch (action.type) {
       case LOCATION_CHANGE:
         const location = action.payload.location
-        const { selectedFlower, selectedPetal } = getFlowerAndPetalFromLocation(location)
+        const { selectedFlower, selectedPetal, embedded } = getFlowerAndPetalFromLocation(location)
         return {
           ...state,
           selectedFlower,
-          selectedPetal
+          selectedPetal,
+          embedded
         }
       case SET_NODE_POSITION:
         return {

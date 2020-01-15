@@ -88,9 +88,11 @@ class FlowerView extends React.Component {
 
   render () {
     const { id, flowerData, session, dimensions, sideBarOpen,
-      globals: { addNodeRoutineRunning, editNodeRoutineRunning, selectedPetal } } = this.props
+      globals: { addNodeRoutineRunning, editNodeRoutineRunning, selectedPetal, embedded } } = this.props
     const { addNodePos } = this.state
     const data = flowerData[id]
+
+    console.log(embedded)
 
     let selectedPetalData
     if (data && data.finished) {
@@ -103,8 +105,8 @@ class FlowerView extends React.Component {
       <div
         className={style.container}
         style={{
-          marginTop: NAVBAR_HEIGHT,
-          height: dimensions.height - NAVBAR_HEIGHT,
+          marginTop: (embedded) ? 0 : NAVBAR_HEIGHT,
+          height: (embedded) ? dimensions.height : dimensions.height - NAVBAR_HEIGHT,
           width: dimensions.width
         }}
       >
@@ -188,7 +190,7 @@ class FlowerView extends React.Component {
           ]
         }
         <div>
-          {session.authenticated &&
+          {session.authenticated && !embedded &&
             <ActionButtonSimple
               size={45}
             />
