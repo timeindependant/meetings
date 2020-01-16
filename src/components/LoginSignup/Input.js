@@ -87,20 +87,23 @@ export default ({ handleSubmit, disabled, error, signup }) => {
         label='Email Adress'
         error={(!state.didChange) ? error : undefined}
       />
-      <div className={style.terms}>
-        <input
-          type='checkbox'
-          className={style.checkbox}
-          onChange={handleChangeTerms}
-        />
-        <span>I agree to the </span>
-        <Link
-          to='/terms'
-          className={style.termsLink}
-        >
+      {
+        signup &&
+        <div className={style.terms}>
+          <input
+            type='checkbox'
+            className={style.checkbox}
+            onChange={handleChangeTerms}
+          />
+          <span>I agree to the </span>
+          <Link
+            to='/terms'
+            className={style.termsLink}
+          >
           Terms and Conditions
-        </Link>
-      </div>
+          </Link>
+        </div>
+      }
       <input
         disabled={!state.isMail || (signup && (!state.isUsername || !state.isChecked)) || disabled}
         className={style.submit}
