@@ -10,6 +10,9 @@
     top: 0;
 }
 
+.mainGrid {
+    max-width: 1700px;
+}
 
 .container {
     position: absolute;
@@ -44,7 +47,7 @@
 }
 
 .textField {
-    background: #E8E8E8;
+    background: black !important;
 }
 
 .submit {
@@ -53,8 +56,9 @@
     margin: 0 auto;
     padding: 10px 60px;
     border-radius: 5px;
+    font-family: Nunito;
     font-size: 0.8em;
-    font-weight: light;
+    font-weight: 600;
     color: white;
     background: #242843;
     transform: scale(1);
@@ -80,31 +84,45 @@
     outline: none;
 }
 
+
+.section {
+    padding: 10%;
+    display: flex;
+}
+
 .description {
     width: 100%;
-    max-width: 320px;
     margin: auto;
     display: flex;
+    vertical-align: middle;
     flex-direction: column;
     justify-content: center;
 }
 
-.section {
-    padding: 10%;
-}
-
 .descriptionText {
     color: #FFF;
-    font-size: 16px;
+    font-size: 1.4em;
     line-height: 1.5em;
+    font-family: Sarabun;
+}
+
+@media (max-width: 700px) {
+    .description {
+        max-width: 420px;
+        text-align: center;
+    }
+    .descriptionText {
+        font-size: 1.2em;
+    }
 }
 
 .heading {
     text-align: center;
     letter-spacing: 1px;
-    font-size: 1.4em;
+    font-size: 1.6em;
     margin-bottom: 28px;
-    font-weight: bold;
+    font-weight: 600;
+    font-family: Sarabun;
 }
 
 .descriptionHeading {
@@ -135,8 +153,51 @@
 }
 
 .paper {
-    padding: 50px 30px;
+    padding: 50px 30px 40px;
     margin: auto;
     border-radius: 20px !important;
-    max-width: 300px;
+    /* max-width: 300px; */
+    width: 300px;
+}
+
+.newAccount {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    font-family: Nunito;
+}
+
+.newHere {
+    color: #8E8E93;
+    font-weight: 600;
+}
+
+.createAccount {
+    color: #0C103C;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.createAccount:visited {
+    color: #0C103C;
+}
+
+.terms {
+    text-align: center;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.checkbox {
+    color: #0C103C;
+    margin-right: 5px;
+}
+
+.termsLink {
+    color: #0C103C !important;
+}
+
+.termsLink:visited {
+    color: #0C103C;
+    margin-left: 5px;
 }

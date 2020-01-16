@@ -24,9 +24,9 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function Textfield ({ onChange, type, error, autoComplete }) {
+export default function Textfield ({ onChange, type, error, autoComplete, label }) {
   const [labelWidth, setLabelWidth] = React.useState(0)
-  const [email, setEmail] = React.useState('')
+  const [value, setValue] = React.useState('')
   const labelRef = React.useRef(null)
   const classes = useStyles()
 
@@ -35,7 +35,7 @@ export default function Textfield ({ onChange, type, error, autoComplete }) {
   }, [])
 
   function handleChange (event) {
-    setEmail(event.target.value)
+    setValue(event.target.value)
     onChange(event.target.value)
   }
 
@@ -50,13 +50,13 @@ export default function Textfield ({ onChange, type, error, autoComplete }) {
         // className={classes.root}
       >
         <InputLabel required ref={labelRef} htmlFor='component-outlined'>
-          Email
+          {label}
         </InputLabel>
         <OutlinedInput
           autoComplete={autoComplete}
           fullWidth
           id='component-outlined'
-          value={email}
+          value={value}
           type={type}
           onChange={handleChange}
           labelWidth={labelWidth}

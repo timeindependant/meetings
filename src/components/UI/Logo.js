@@ -41,9 +41,9 @@ class Logo extends React.Component {
           {
             !justLettering &&
             <img
-              src='/images/timz_logo.png'
+              src={`/images/timz_logo_${(dark) ? 'dark' : 'light'}.svg`}
               alt='Timz Logo'
-              height='90%'
+              height='100%'
               style={{
                 marginRight: `${height * 0.4}px`
               }}
@@ -53,7 +53,7 @@ class Logo extends React.Component {
           <img
             src={`/images/timz_font_solo_${(dark) ? 'dark' : 'light'}.svg`}
             alt='Timz Lettering'
-            height='100%'
+            height='90%'
           />
           }
         </div>

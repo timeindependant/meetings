@@ -11,7 +11,7 @@ import { resize } from './state/dimensions/actions'
 
 import FloatingButton from './components/UI/FloatingButton'
 import Navigation from './components/Navigation/Navigation'
-import Login from './components/Login/Login'
+import LoginSignUp from './components/LoginSignup/LoginSignUp'
 import AdminArea from './components/Admin/AdminArea'
 import FlowerView from './components/FlowerView'
 import FlowerRoutine from './components/Routines/FlowerRoutine'
@@ -102,7 +102,8 @@ class App extends Component {
           <div>
             <Switch location={location}>
               <Route path='/admin' exact component={AdminArea} />
-              <Route path='/login' exact render={() => <Login />} />
+              <Route path='/login' exact render={() => <LoginSignUp />} />
+              <Route path='/signup' exact render={() => <LoginSignUp signUp />} />
               <Route
                 path='/iframe/:id'
                 exact
