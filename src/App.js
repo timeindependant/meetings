@@ -53,6 +53,8 @@ class App extends Component {
   }
 
   componentDidMount () {
+    console.log(navigator.platform)
+    console.log(!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform))
     window.addEventListener('resize', this.props.resize)
     toast.configure({
       position: 'top-right',
