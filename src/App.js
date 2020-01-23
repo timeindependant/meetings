@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router' // eslint-disable-line no-unused-vars
 import { toast } from 'react-toastify'
 import queryString from 'query-string'
+import isMobile from 'ismobilejs'
 
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -48,13 +49,10 @@ class App extends Component {
   state = {
     flowerOverlayVisible: false,
     sideBarOpen: this.props.dimensions.width > MOBILE_BREAKPOINT,
-    selectedFlower: this.props.globals.selectedFlower,
-    iOS: !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
+    selectedFlower: this.props.globals.selectedFlower
   }
 
   componentDidMount () {
-    console.log(navigator.platform)
-    console.log(!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform))
     window.addEventListener('resize', this.props.resize)
     toast.configure({
       position: 'top-right',
@@ -97,7 +95,7 @@ class App extends Component {
 
   render () {
     const { session, globals, dimensions } = this.props
-    const { sideBarOpen, iOS } = this.state
+    const { sideBarOpen } = this.state
     return (
       <Route
         render={({ location }) => (
@@ -141,7 +139,7 @@ class App extends Component {
                 render={() => (
                   <FloatingButton
                     onClickCallback={() => {
-                      if (iOS) {
+                      if (isMobile.apple.device) {
                         window.open('https://2d2rw.test-app.link/addvideo')
                       } else {
                         this.toggleAddFlowerOverlay()
