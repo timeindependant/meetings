@@ -40,7 +40,7 @@
   bottom: 80px;
   position: absolute;
   cursor: pointer;
-  z-index: 999;
+  z-index: 25;
 }
 
 .handleArrow {
