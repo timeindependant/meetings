@@ -35,7 +35,7 @@ class SignUp extends React.Component {
           <Input
             key='input'
             handleSubmit={this.handleSubmit}
-            error={(session.loginLinkFailed) ? 'Please try again.' : undefined}
+            error={(session.loginLinkFailed) ? 'User already signed up.' : undefined}
             disabled={session.loginLinkLoading}
             signup
           />,
