@@ -8,6 +8,17 @@ import VideoPlayer from '../VideoPlayer/VideoPlayer'
 
 import style from './WebRecorder.module.css'
 
+const constraints = {
+  audio: true,
+  video: {
+    facingMode: 'user',
+    width: 480,
+    height: 480
+    // width: { exact: 480 },
+    // height: { exact: 480 }
+  }
+}
+
 /* Function copied from @uppy/webcam */
 function getMediaDevices () {
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -42,7 +53,7 @@ class WebRecorder extends React.Component {
   constructor (props) {
     super(props)
     this.mediaDevices = getMediaDevices()
-    this.mediaDevices.getUserMedia({ audio: true, video: true })
+    this.mediaDevices.getUserMedia(constraints)
       .then((stream) => {
         this.stream = stream
         this.webcamPreview.srcObject = stream
