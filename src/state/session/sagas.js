@@ -1,34 +1,38 @@
 import { put, takeEvery, takeLatest } from 'redux-saga/effects'
 import jwtDecode from 'jwt-decode'
+import { request } from 'graphql-request'
+
 import { LOGIN_LOADING, LOGIN_SUCCESS, LOGIN_ERROR,
   LOGIN_LINK_LOADING, LOGIN_LINK_SUCCESS, LOGIN_LINK_ERROR,
   LOGOUT_ERROR, LOGOUT_LOADING } from './actions'
 
-import { fetchAsync } from '../helpers'
+import { fetchAsync, requestAsync } from '../helpers'
+import { getToken, setToken, deleteToken } from '../localStore'
 
 const AUTH_API_URL = 'https://auth.serv.timz.io/auth/graphql'
+
+const loginViaMail = (email) => `mutation { loginViaMail(email: "${email}") { message }}`
 
 function * login (action) {
   try {
     if (action.token) {
       yield fetchAsync(
         () => fetch(
-          AUTH_API_URL,
+          process.env.REACT_APP_SERVER_URL + '/api/checkLogin',
           {
-            method: 'POST',
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${action.token}`
-            },
-            body: JSON.stringify({ query: `{ verifyToken() { message }}` })
+            }
           }
         ))
 
       const decoded = jwtDecode(action.token)
-      localStorage.setItem('token', action.token)
+      setToken(action.token)
       yield put({ type: LOGIN_SUCCESS, name: decoded.name, role: decoded.role, id: decoded.id })
     } else {
-      const token = localStorage.getItem('token')
+      const token = getToken()
 
       if (!token) {
         throw Error('No Token found.')
@@ -36,19 +40,17 @@ function * login (action) {
 
       yield fetchAsync(
         () => fetch(
-          AUTH_API_URL,
+          process.env.REACT_APP_SERVER_URL + '/api/checkLogin',
           {
-            method: 'POST',
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ query: `{ verifyToken() { message }}` })
+            }
           }
         ))
 
-      const decoded = jwtDecode(action.token)
-      localStorage.setItem('token', action.token)
+      const decoded = jwtDecode(token)
       yield put({ type: LOGIN_SUCCESS, name: decoded.name, role: decoded.role, id: decoded.id })
     }
   } catch (e) {
@@ -66,17 +68,7 @@ export function * loginSaga () {
 
 function * getLoginLink (action) {
   try {
-    yield fetchAsync(
-      () => fetch(
-        AUTH_API_URL,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ mutation: `{ login(email: ${action.email}) { message }}` })
-        }
-      ))
+    yield requestAsync(() => request(AUTH_API_URL, loginViaMail(action.email)))
     yield put({ type: LOGIN_LINK_SUCCESS })
   } catch (e) {
     yield put({ type: LOGIN_LINK_ERROR, message: e.message })
@@ -100,8 +92,8 @@ function * logout () {
           body: JSON.stringify({ mutation: `{ logout() { message }}` })
         }
       ))
-    localStorage.removeItem('token')
-    location.reload()
+    deleteToken()
+    window.location.reload()
   } catch (e) {
     yield put({ type: LOGOUT_ERROR, message: e.message })
   }

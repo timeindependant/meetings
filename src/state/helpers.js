@@ -5,3 +5,8 @@ export async function fetchAsync (func) {
   }
   throw new Error(response)
 }
+
+export async function requestAsync (func) {
+  const response = await func()
+  return response
+}
