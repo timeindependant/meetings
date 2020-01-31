@@ -35,7 +35,7 @@ class Login extends React.Component {
           <Input
             key='input'
             handleSubmit={this.handleLogin}
-            error={(session.loginLinkFailed) ? 'Please try again.' : undefined}
+            error={(session.loginLinkFailed) ? 'User not found.' : undefined}
             disabled={session.loginLinkLoading}
           />,
           <div

@@ -76,7 +76,6 @@ export default ({ handleSubmit, disabled, error, signup }) => {
         type='name'
         autoComplete='username'
         label='Username'
-        error={(!state.didChange) ? error : undefined}
       />
       }
       <TextField

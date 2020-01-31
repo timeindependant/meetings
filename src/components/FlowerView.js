@@ -14,6 +14,7 @@ import AddNodeRoutine from './Routines/NodeRoutine'
 import SeedInfo from './FlowerUI/SeedInfo'
 import PetalInfo from './FlowerUI/PetalInfo'
 import ActionButtonSimple from './UI/ActionButtonSimple'
+import InviteContributors from './Share/InviteContributors'
 
 import style from './FlowerView.module.css'
 
@@ -92,8 +93,6 @@ class FlowerView extends React.Component {
     const { addNodePos } = this.state
     const data = flowerData[id]
 
-    console.log(embedded)
-
     let selectedPetalData
     if (data && data.finished) {
       selectedPetalData = data.connections.find(connection => connection.id === selectedPetal)
@@ -170,7 +169,7 @@ class FlowerView extends React.Component {
           />
           }
         </div>
-        {session.authenticated && data && selectedPetal && selectedPetal !== data.id && !nodeRoutineRunning &&
+        {!embedded && session.authenticated && data && selectedPetal && selectedPetal !== data.id && !nodeRoutineRunning &&
            (session.role === 'admin' || session.id === selectedPetalData.user.id) &&
           [
             <div
@@ -189,13 +188,14 @@ class FlowerView extends React.Component {
             </div>
           ]
         }
+        {session.authenticated && !embedded &&
         <div>
-          {session.authenticated && !embedded &&
-            <ActionButtonSimple
-              size={45}
-            />
-          }
+          <ActionButtonSimple
+            size={45}
+          />
+          <InviteContributors />
         </div>
+        }
       </div>
     )
   }
