@@ -64,6 +64,7 @@ class App extends Component {
       const parsedQuery = queryString.parse(this.props.location.search)
 
       if (parsedQuery.token) {
+        console.log(parsedQuery.token)
         this.props.login(parsedQuery.token)
         const location = window.location.toString()
         window.history.replaceState(
