@@ -1,6 +1,6 @@
 import { LOGIN_LOADING, LOGIN_ERROR, LOGIN_SUCCESS,
   LOGIN_LINK_LOADING, LOGIN_LINK_SUCCESS, LOGIN_LINK_ERROR,
-  LOGOUT_ERROR, LOGOUT_LOADING, LOGOUT_SUCCESS } from './actions'
+  LOGOUT_ERROR, LOGOUT_LOADING } from './actions'
 import { toast } from 'react-toastify'
 
 const initialState = {
@@ -59,17 +59,6 @@ export default function sessionReducer (state = initialState, action) {
       return {
         ...state,
         loading: false
-      }
-    case LOGOUT_SUCCESS:
-      toast.success('Successfully logged out.')
-      return {
-        ...state,
-        loading: false,
-        failed: false,
-        authenticated: false,
-        name: '',
-        role: '',
-        id: ''
       }
     case LOGIN_LINK_LOADING:
       return {

@@ -6,19 +6,20 @@ import { EDIT_NODE_LOADING, EDIT_NODE_ERROR, EDIT_NODE_SUCCESS,
 import { listFlowers } from '../flowerList/actions'
 
 import { getFlowerData } from '../flowerData/actions'
-
 import { fetchAsync } from '../helpers'
+import { getToken } from '../localStore'
 
 function * addNode (action) {
   try {
+    const token = getToken()
     const response = yield fetchAsync(
       () => fetch(
         `${process.env.REACT_APP_SERVER_URL}/api/node`,
         {
-          credentials: 'include',
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(action.data)
         }
@@ -38,14 +39,15 @@ export function * addNodeSaga () {
 
 function * editNode (action) {
   try {
+    const token = getToken()
     const response = yield fetchAsync(
       () => fetch(
         `${process.env.REACT_APP_SERVER_URL}/api/node`,
         {
-          credentials: 'include',
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(action.data)
         }
@@ -64,15 +66,16 @@ export function * editNodeSaga () {
 }
 
 function * addFlower (action) {
+  const token = getToken()
   try {
     yield fetchAsync(
       () => fetch(
         `${process.env.REACT_APP_SERVER_URL}/api/flower`,
         {
-          credentials: 'include',
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(action.data)
         }
@@ -89,14 +92,15 @@ export function * addFlowerSaga () {
 
 function * editFlower (action) {
   try {
+    const token = getToken()
     yield fetchAsync(
       () => fetch(
         `${process.env.REACT_APP_SERVER_URL}/api/flower`,
         {
-          credentials: 'include',
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(action.data)
         }
