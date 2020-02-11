@@ -12,10 +12,10 @@ const constraints = {
   audio: true,
   video: {
     facingMode: 'user',
-    width: 480,
-    height: 480
-    // width: { exact: 480 },
-    // height: { exact: 480 }
+    // width: 480,
+    // height: 480
+    width: { exact: 480 },
+    height: { exact: 480 }
   }
 }
 
